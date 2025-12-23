@@ -17,6 +17,9 @@ importers:
       '@ngneat/elf-pagination':
         specifier: ^1.1.0
         version: 1.1.0(@ngneat/elf-entities@5.0.2(@ngneat/elf@2.5.1(rxjs@7.8.2))(rxjs@7.8.2))
+      '@ngneat/react-rxjs':
+        specifier: ^1.1.0
+        version: 1.1.0(react@19.2.3)(rxjs@7.8.2)
       '@radix-ui/react-dialog':
         specifier: ^1.1.15
         version: 1.1.15(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
@@ -469,6 +472,12 @@ packages:
     resolution: {integrity: sha512-13BItNZFgHglTiXuP9XhisNczwQ5QSzH+imAv9nAPsdbCq/3ortqkIYRnlxB8DGPVcuIjLujQ4OcZa+9QWgZtw==}
     peerDependencies:
       rxjs: '>=7.0.0'
+
+  '@ngneat/react-rxjs@1.1.0':
+    resolution: {integrity: sha512-dxZNnnv+9Fsf/ipoXd/jaCIhz6ruxDFeUaX80vFa5a+Y/v3iyjgEFEQyZEfGDciQspabLt6XLHNDrMJAHV/03w==}
+    peerDependencies:
+      react: '*'
+      rxjs: '*'
 
   '@radix-ui/primitive@1.1.3':
     resolution: {integrity: sha512-JTF99U/6XIjCBo0wqkU5sK10glYe27MRRsfwoiq5zzOEZLHU3A3KCMa5X/azekYRCJ0HlwI0crAXS/5dEHTzDg==}
@@ -2120,6 +2129,11 @@ snapshots:
 
   '@ngneat/elf@2.5.1(rxjs@7.8.2)':
     dependencies:
+      rxjs: 7.8.2
+
+  '@ngneat/react-rxjs@1.1.0(react@19.2.3)(rxjs@7.8.2)':
+    dependencies:
+      react: 19.2.3
       rxjs: 7.8.2
 
   '@radix-ui/primitive@1.1.3': {}

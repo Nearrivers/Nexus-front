@@ -6,9 +6,21 @@ type RouteObject<T extends string> = {
   element?: ReactNode;
 };
 
-export type UnAuthRoutes = "/" | "*" | "login" | "signup";
+export const UNAUTH_ROUTES = {
+  joker: "*",
+  login: "/login",
+  signup: "/signup",
+} as const;
 
-export type AuthRoutes = "";
+export const AUTH_ROUTES = {
+  joker: "*",
+  home: "/home",
+  note: "/note",
+} as const;
+
+export type UnAuthRoutes = (typeof UNAUTH_ROUTES)[keyof typeof UNAUTH_ROUTES];
+
+export type AuthRoutes = (typeof AUTH_ROUTES)[keyof typeof AUTH_ROUTES];
 
 export type UnAuthRouteObject = RouteObject<UnAuthRoutes>;
 

@@ -1,8 +1,13 @@
-import type { ComponentProps, FormEvent } from "react";
+import { useState, type ComponentProps, type FormEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
+import { finalize } from "rxjs";
 
 import { cn } from "@/lib/utils";
+
+import useForm from "@/hooks/useForm.hook";
+
+import { LoginSchema, sessionService, type LoginModel } from "@/store/session";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -12,19 +17,38 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Field,
-  FieldDescription,
-  FieldGroup,
-  FieldLabel,
-} from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
+import { Field, FieldDescription, FieldGroup } from "@/components/ui/field";
+import TextFieldComponent from "@/components/inputs/TextField.component";
+import PasswordComponent from "@/components/inputs/Password.component";
 
 export function LoginForm({ className, ...props }: ComponentProps<"div">) {
   const { t } = useTranslation("login");
 
+  const [loading, setLoading] = useState(false);
+
+  const { data, setData, errors, displayErrors } = useForm(LoginSchema, {
+    email: "a.fourcade65@gmail.com",
+    password: "Ae$2f3lk",
+  } satisfies LoginModel);
+
   const handleSubmit = (evt: FormEvent) => {
     evt.preventDefault();
+
+    const err = displayErrors();
+    if (err) {
+      console.log(err);
+      return;
+    }
+
+    setLoading(true);
+    sessionService
+      .login(data as LoginModel)
+      .pipe(finalize(() => setLoading(false)))
+      .subscribe({
+        next: () => {
+          console.log("ok");
+        },
+      });
   };
 
   return (
@@ -35,31 +59,39 @@ export function LoginForm({ className, ...props }: ComponentProps<"div">) {
           <CardDescription>{t("lead")}</CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form noValidate onSubmit={handleSubmit}>
             <FieldGroup>
+              <TextFieldComponent
+                required
+                id="email"
+                type="email"
+                label={t("email")}
+                value={data.email}
+                errors={errors?.email}
+                placeholder="example@mail.com"
+                handleChange={(value) =>
+                  setData((state) => ({
+                    ...state,
+                    email: value,
+                  }))
+                }
+              />
+              <PasswordComponent
+                required
+                id="password"
+                label={t("password")}
+                value={data.password}
+                errors={errors?.password}
+                placeholder={t("password")}
+                handleChange={(value) =>
+                  setData((state) => ({
+                    ...state,
+                    password: value,
+                  }))
+                }
+              />
               <Field>
-                <FieldLabel htmlFor="email">{t("email")}</FieldLabel>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="m@example.com"
-                  required
-                />
-              </Field>
-              <Field>
-                <div className="flex items-center">
-                  <FieldLabel htmlFor="password">{t("password")}</FieldLabel>
-                  <a
-                    href="#"
-                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                  >
-                    {t("forgotPassword")}
-                  </a>
-                </div>
-                <Input id="password" type="password" required />
-              </Field>
-              <Field>
-                <Button type="submit">
+                <Button type="submit" disabled={loading}>
                   {t("buttons.login", { ns: "global" })}
                 </Button>
                 <FieldDescription className="text-center">

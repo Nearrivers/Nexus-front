@@ -6,18 +6,18 @@
 	"password": "Mot de passe",
 	"confirm": "Confirmation du mot de passe",
 	"noAccount": "Vous n'avez pas de compte ? ",
+		"forgotPassword": "Mot de passe oublié ?",
 	"signUp": {
 		"link": "Inscrivez-vous",
 		"title": "Inscription",
 		"lead": "Création de votre compte",
 		"backToLogin": "Retour à la page de connexion",
 		"confirmPassword": "Confirmez votre nouveau mot de passe",
-		"forgotPassword": "Mot de passe oublié ?",
 		"hidePassword": "Masquer le mot de passe",
 		"showPassword": "Afficher le mot de passe",
 		"specialHelper": {
-      "title": "Caractères spéciaux :",
-      "description": "- # ! $ @ £ % ^ & * ( ) _ + | ~ = ` { } [ ] : \" ; ' < > ? , . / \\ & espace"
+		      "title": "Caractères spéciaux :",
+		      "description": "- # ! $ @ £ % ^ & * ( ) _ + | ~ = ` { } [ ] : \" ; ' < > ? , . / \\ & espace"
 		}
 	}
 }

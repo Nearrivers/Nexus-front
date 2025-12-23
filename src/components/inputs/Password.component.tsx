@@ -18,10 +18,10 @@ import {
 
 type PasswordComponentProps = ComponentProps<"input"> & {
   label: string;
-  value: string;
   placeholder: string;
-  handleChange: (value: string) => void;
+  value: string | undefined;
   errors?: string | string[];
+  handleChange: (value: string) => void;
 };
 
 const PasswordComponent = (props: PasswordComponentProps) => {
@@ -46,6 +46,7 @@ const PasswordComponent = (props: PasswordComponentProps) => {
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
+              type="button"
               variant="ghost"
               className="bg-transparent absolute right-2 w-6! h-6 p-0 bottom-4.5 translate-y-1/2"
               onClick={() => setShowPassword((state) => !state)}

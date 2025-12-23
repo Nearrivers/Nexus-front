@@ -5,13 +5,22 @@ import { FieldValidationType } from "@/lib/zod.config";
 
 export type SessionUser = {
   id: string;
-  pseudonym: string;
+  avatar_url: string;
+  created_at: Date;
+  username: string;
+  email: string;
 };
 
 export type SessionModel = {
-  accessToken: string;
   user: SessionUser | null;
 };
+
+export const LoginSchema = z.object({
+  email: FieldValidationType.REQUIRED_EMAIL,
+  password: FieldValidationType.REQUIRED_STRING,
+});
+
+export type LoginModel = z.infer<typeof LoginSchema>;
 
 export const SignUpSchema = z
   .object({

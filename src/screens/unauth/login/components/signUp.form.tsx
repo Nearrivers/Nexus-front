@@ -1,6 +1,6 @@
 import { useState, type ComponentProps, type FormEvent } from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { finalize } from "rxjs";
 
 import { cn } from "@/lib/utils";
@@ -27,6 +27,7 @@ import TextFieldComponent from "@/components/inputs/TextField.component";
 
 export function SignUpForm({ className, ...props }: ComponentProps<"div">) {
   const { t } = useTranslation("login");
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
 
@@ -52,7 +53,7 @@ export function SignUpForm({ className, ...props }: ComponentProps<"div">) {
       .pipe(finalize(() => setLoading(false)))
       .subscribe({
         next: () => {
-          console.log("ok");
+          navigate("/login");
         },
       });
   };
