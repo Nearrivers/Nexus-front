@@ -13,4 +13,14 @@ export const FieldValidationType = {
     z
       .string(i18n.t("fields.required", { ns: "errors" }))
       .length(length, i18n.t("fields.length", { ns: "errors", length })),
+
+  /* --- */
+  OPTIONAL_STRING: z.string(i18n.t("fields.string")).optional(),
+  OPTIONAL_NUMBER: z.number(i18n.t("fields.number")).optional(),
+  OPTIONAL_BOOLEAN: z.boolean(i18n.t("fields.boolean")).optional(),
+  OPTIONAL_LENGTH_STRING: (length: number) =>
+    z
+      .string(i18n.t("fields.string"))
+      .length(length, i18n.t("fields.length"))
+      .optional(),
 };

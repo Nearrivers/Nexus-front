@@ -5,7 +5,10 @@
 		"cancel": "Annuler",
 		"save": "Enregistrer",
 		"delete": "Supprimer",
-		"createPlayer": "Créer un nouveau joueur"
+		"createPlayer": "Créer un nouveau joueur",
+		"createItem": "Créer un nouvel objet",
+		"close": "Fermer",
+		"addDice": "Ajouter un dé"
 	},
 	"modeToggle": {
 		"lead": "Modifier le thème",
@@ -13,10 +16,5 @@
 		"dark": "Sombre",
 		"system": "Système"
 	},
-	"search": "Rechercher",
-	"sidebar": {
-		"trigger": "Afficher / Masquer la barre de navigation",
-		"home": "Accueil",
-		"tags": "Gérer les tags"
-	}
+	"sessionExpired": "Votre session a expiré. Veuillez vous reconnecter"
 }

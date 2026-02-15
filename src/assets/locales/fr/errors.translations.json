@@ -13,6 +13,9 @@
 		"helper": {
 			"title": "Caractères spéciaux :",
 			"description": "- # ! $ @ £ % ^ & * ( ) _ + | ~ = ` { } [ ] : \" ; ' < > ? , . / \\ & espace"
-		}
+		},
+		"string": "Il faut une chaîne de caractères",
+		"number": "Il faut un nombre",
+		"boolean": "Il faut un booléen"
 	}
 }

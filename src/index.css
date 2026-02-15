@@ -162,6 +162,12 @@
   --shadow-lg: var(--shadow-lg);
   --shadow-xl: var(--shadow-xl);
   --shadow-2xl: var(--shadow-2xl);
+
+  --color-basic: linear-gradient(to bottom, #1B1A1999, #1B1A1999, #1B1A1999, #40295199);
+  --color-common: linear-gradient(to bottom, #00491599, #1B1A1999, #1B1A1999, #40295199);
+  --color-rare: linear-gradient(to bottom, #00374999, #1B1A1999, #1B1A1999, #40295199);
+  --color-very_rare: linear-gradient(to bottom, #54003299, #1B1A1999, #1B1A1999, #40295199);
+  --color-legendary: linear-gradient(to bottom, #563E0D99, #1B1A1999, #1B1A1999, #40295199);
 }
 
 body {

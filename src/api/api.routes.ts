@@ -1,15 +1,9 @@
 import { httpRequest } from "@/api/httpRequest";
+import type { ImageResponseModel } from "@/store/images";
+import type { ItemFormModel, ItemModel } from "@/store/items/items.model";
 import { type PlayerModel, type PlayerFormModel } from "@/store/players";
 
 import { type LoginModel } from "@/store/session";
-
-export type ApiRoutes =
-  | "/auth/login"
-  | "/auth/logout"
-  | "/auth/refresh"
-  | "/auth/me"
-  | "/players"
-  | `/players/${string}`;
 
 export const API_ROUTES = {
   /* -- SESSION -- */
@@ -27,6 +21,17 @@ export const API_ROUTES = {
   GET_ONE_PLAYER: (id: string) =>
     httpRequest<PlayerModel[]>(`/players/${id}`, "GET"),
   /* ------------- */
-} as const;
 
-export type ApiRoutesMethods = keyof typeof API_ROUTES;
+  /* -- PLAYERS -- */
+  POST_CREATE_ITEM: (data: Partial<ItemFormModel>) =>
+    httpRequest<ItemModel>("/items", "POST", data),
+  GET_ITEMS: () => httpRequest<ItemModel[]>("/items", "GET"),
+  GET_ONE_ITEM: (id: string) =>
+    httpRequest<PlayerModel[]>(`/items/${id}`, "GET"),
+  /* ------------- */
+
+  /* -- IMAGES -- */
+  POST_UPLOAD_IMAGE: (data: FormData) =>
+    httpRequest<ImageResponseModel>("/upload/image", "POST", data),
+  /* ------------ */
+} as const;

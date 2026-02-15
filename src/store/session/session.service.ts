@@ -6,6 +6,7 @@ import { BuildRequest, FetchError } from "@/api/httpRequest";
 
 import { sessionStore, type LoginModel } from "@/store/session";
 import type { PlayerModel } from "../players";
+import { toast } from "sonner";
 
 class SessionService {
   store = sessionStore;
@@ -28,11 +29,10 @@ class SessionService {
   };
 
   logout = async () => {
-    try {
-      await API_ROUTES.POST_LOGOUT();
-      this.store.reset();
-      getRegistry().forEach((store) => store.reset());
-    } catch (error) {}
+    await API_ROUTES.POST_LOGOUT();
+    this.store.reset();
+    getRegistry().forEach((store) => store.reset());
+    toast.error("Test");
   };
 
   getMe = () => {

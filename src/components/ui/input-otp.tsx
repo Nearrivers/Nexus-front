@@ -62,7 +62,7 @@ function InputOTPSlot({
     if (inputOTPContext.slots[index + 1].char === null) {
       return true;
     }
-  }, [inputOTPContext, index]);
+  }, [inputOTPContext, index, type]);
 
   return (
     <div

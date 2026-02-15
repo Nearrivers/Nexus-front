@@ -26,6 +26,7 @@ export const AUTH_ROUTES = {
   addPlayer: "/player/add",
   items: "/items",
   oneItem: "/items/:id",
+  addItem: "/items/add",
 } as const;
 
 export type UnAuthRoutes = (typeof UNAUTH_ROUTES)[keyof typeof UNAUTH_ROUTES];
@@ -64,7 +65,7 @@ export type ExtractParams<T extends string> =
       T extends `${string}:${infer Param}`
       ? { [K in Param]: string }
       : // Aucun param
-        {};
+        object;
 
 export function buildPath<T extends AppRoute>(
   path: T,

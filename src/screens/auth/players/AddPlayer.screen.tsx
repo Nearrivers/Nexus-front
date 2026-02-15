@@ -3,6 +3,9 @@ import { useTranslation } from "react-i18next";
 import { finalize } from "rxjs";
 
 import useForm from "@/hooks/useForm.hook";
+import useTypedNavigate from "@/hooks/useTypedNavigate.hook";
+
+import { AUTH_ROUTES } from "@/@types/route-path";
 
 import {
   PlayerSchema,
@@ -10,7 +13,6 @@ import {
   type PlayerFormModel,
 } from "@/store/players";
 
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -18,12 +20,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Field, FieldGroup } from "@/components/ui/field";
 import PinCodeComponent from "@/components/inputs/PinCode.component";
 import CheckboxComponent from "@/components/inputs/Checkbox.component";
 import TextFieldComponent from "@/components/inputs/TextField.component";
-import useTypedNavigate from "@/hooks/useTypedNavigate.hook";
-import { AUTH_ROUTES } from "@/@types/route-path";
 
 const AddPlayerScreen = () => {
   const { t } = useTranslation("players");
@@ -31,13 +32,17 @@ const AddPlayerScreen = () => {
 
   const [loading, setLoading] = useState(false);
 
-  const { data, setData, errors, displayErrors } = useForm(PlayerSchema, {
-    class: undefined,
-    is_admin: false,
-    name: undefined,
-    pinCode: undefined,
-    total_experience: 0,
-  } as Partial<PlayerFormModel>);
+  const { data, setData, errors, displayErrors } = useForm(
+    undefined,
+    PlayerSchema,
+    {
+      class: undefined,
+      is_admin: false,
+      name: undefined,
+      pinCode: undefined,
+      total_experience: 0,
+    } as Partial<PlayerFormModel>,
+  );
 
   const handleSubmit = (evt: FormEvent) => {
     evt.preventDefault();
@@ -56,8 +61,6 @@ const AddPlayerScreen = () => {
         next: () => navigate(AUTH_ROUTES.home),
       });
   };
-
-  console.log(errors);
 
   return (
     <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">

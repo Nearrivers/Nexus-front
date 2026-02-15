@@ -1,7 +1,11 @@
 import * as z from "zod";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 
-const useForm = <T>(schema: z.ZodTypeAny, initialState: T) => {
+const useForm = <T>(
+  schema: z.ZodTypeAny | undefined,
+  strictSchema: z.ZodTypeAny,
+  initialState: T,
+) => {
   const [data, setData] = useState<T>(initialState);
 
   const [errors, setErrors] = useState<Record<
@@ -9,8 +13,10 @@ const useForm = <T>(schema: z.ZodTypeAny, initialState: T) => {
     string | string[]
   > | null>(null);
 
-  const displayErrors = useCallback(() => {
-    const result = schema.safeParse(data);
+  const displayErrors = () => {
+    const result = schema
+      ? schema.pipe(strictSchema).safeParse(data)
+      : strictSchema.safeParse(data);
 
     if (result.success) {
       setErrors(null);
@@ -39,7 +45,7 @@ const useForm = <T>(schema: z.ZodTypeAny, initialState: T) => {
 
     setErrors(errs);
     return errs;
-  }, [data, schema]);
+  };
 
   return {
     data,

@@ -20,4 +20,12 @@ export const PlayerSchema = z.object({
   is_admin: FieldValidationType.REQUIRED_BOOLEAN,
 });
 
+export const PlayerFormModel = z.object({
+  name: FieldValidationType.REQUIRED_STRING,
+  pinCode: FieldValidationType.REQUIRED_LENGTH_STRING(9),
+  class: FieldValidationType.REQUIRED_STRING,
+  total_experience: FieldValidationType.REQUIRED_NUMBER,
+  is_admin: FieldValidationType.REQUIRED_BOOLEAN,
+});
+
 export type PlayerFormModel = z.infer<typeof PlayerSchema>;

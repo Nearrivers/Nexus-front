@@ -3,6 +3,7 @@ import type { ComponentProps } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Field, FieldError } from "@/components/ui/field";
 import { Label } from "@/components/ui/label";
+import { cn } from "@/lib/utils";
 
 type CheckboxComponentProps = ComponentProps<"input"> & {
   id?: string;
@@ -13,11 +14,20 @@ type CheckboxComponentProps = ComponentProps<"input"> & {
 };
 
 const CheckboxComponent = (props: CheckboxComponentProps) => {
-  const { id, label, value, handleChange, errors, disabled, required } = props;
+  const {
+    id,
+    label,
+    value,
+    handleChange,
+    errors,
+    disabled,
+    required,
+    className,
+  } = props;
 
   return (
     <Field>
-      <div className="flex items-center gap-2">
+      <div className={cn("flex items-center gap-2", className)}>
         <Checkbox
           id={id}
           required={required}

@@ -24,9 +24,13 @@ export function LoginForm({ className, ...props }: ComponentProps<"div">) {
 
   const [loading, setLoading] = useState(false);
 
-  const { data, setData, errors, displayErrors } = useForm(LoginSchema, {
-    password: "",
-  } satisfies LoginModel);
+  const { data, setData, errors, displayErrors } = useForm(
+    undefined,
+    LoginSchema,
+    {
+      password: "",
+    } satisfies LoginModel,
+  );
 
   const handleSubmit = (evt: FormEvent) => {
     evt.preventDefault();

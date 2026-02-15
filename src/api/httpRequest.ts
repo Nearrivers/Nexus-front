@@ -1,5 +1,3 @@
-import { type ApiRoutes } from "@/api/api.routes";
-
 import { sessionService } from "@/store/session";
 
 type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
@@ -27,24 +25,31 @@ export type FetchResult<T> = {
   data: T;
 };
 
-export function BuildRequest(url: ApiRoutes, method: HttpMethod, body?: any) {
+export function BuildRequest(url: string, method: HttpMethod, body?: object) {
   const headers = new Headers();
   headers.set("Content-Type", "application/json");
 
+  const isMutliPartForm = body instanceof FormData;
+
   return new Request(import.meta.env.VITE_API_HOST + url, {
     method,
-    ...(!!body && {
-      body: JSON.stringify(body),
+    ...(isMutliPartForm && {
+      body,
     }),
-    headers,
+    ...(!isMutliPartForm && {
+      headers,
+      ...(!!body && {
+        body: JSON.stringify(body),
+      }),
+    }),
     credentials: "include",
   });
 }
 
 export async function httpRequest<T>(
-  url: ApiRoutes,
+  url: string,
   method: HttpMethod,
-  body?: any,
+  body?: object,
 ): Promise<FetchResult<T>> {
   const req = BuildRequest(url, method, body);
   const res = await fetch(req);
@@ -59,9 +64,7 @@ export async function httpRequest<T>(
   }
 
   let errorBody: ErrorResponse | undefined = undefined;
-  try {
-    errorBody = (await res.clone().json()) as ErrorResponse;
-  } catch {}
+  errorBody = (await res.clone().json()) as ErrorResponse;
 
   if (
     res.status !== 401 ||

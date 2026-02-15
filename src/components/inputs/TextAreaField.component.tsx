@@ -1,9 +1,9 @@
 import type { ComponentProps } from "react";
 
+import { Textarea } from "@/components/ui/textarea";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
 
-type TextFieldComponentProps = ComponentProps<"input"> & {
+type TextAreaFieldComponentProps = ComponentProps<"textarea"> & {
   id: string;
   label: string;
   value: string | number | undefined;
@@ -11,23 +11,21 @@ type TextFieldComponentProps = ComponentProps<"input"> & {
   errors?: string | string[];
 };
 
-const TextFieldComponent = ({
+const TextAreaFieldComponent = ({
   id,
   label,
   value,
   handleChange,
-  type = "text",
   errors,
   className,
   ...props
-}: TextFieldComponentProps) => {
+}: TextAreaFieldComponentProps) => {
   return (
     <Field className={className}>
       <FieldLabel htmlFor={id}>{label}</FieldLabel>
-      <Input
+      <Textarea
         id={id}
         {...props}
-        type={type}
         value={value}
         onChange={(evt) => handleChange(evt.target.value)}
       />
@@ -44,4 +42,4 @@ const TextFieldComponent = ({
   );
 };
 
-export default TextFieldComponent;
+export default TextAreaFieldComponent;
