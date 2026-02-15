@@ -28,6 +28,8 @@ import RichTextComponent from "../RichText.component";
 
 type ItemCardComponentProps = {
   item: ItemModel | ItemFormModel;
+  className?: string;
+  onClick?: () => void;
 };
 
 type DamageDice = {
@@ -35,7 +37,11 @@ type DamageDice = {
   damageType: DamageType;
 };
 
-const ItemCardComponent = ({ item }: ItemCardComponentProps) => {
+const ItemCardComponent = ({
+  item,
+  className,
+  onClick,
+}: ItemCardComponentProps) => {
   const { t } = useTranslation("items");
   const backgroundColor = RarityColors[item.rarity ?? "basic"];
 
@@ -71,7 +77,11 @@ const ItemCardComponent = ({ item }: ItemCardComponentProps) => {
             "--gradient-color": backgroundColor.bgColor,
           } as CSSProperties
         }
-        className="font-serif bg-[linear-gradient(to_bottom,var(--gradient-color),#1B1A1999,#1B1A1999,#40295199)] border-none w-full h-full flex justify-between"
+        onClick={onClick}
+        className={cn(
+          "font-serif bg-[linear-gradient(to_bottom,var(--gradient-color),#1B1A1999,#1B1A1999,#40295199)] border-none w-full h-full flex justify-between",
+          className,
+        )}
       >
         <div className="h-full flex-1 flex flex-col gap-2 justify-between">
           <CardHeader className="flex justify-between">

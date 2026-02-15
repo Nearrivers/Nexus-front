@@ -1,5 +1,5 @@
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useCallback, useEffect, useState } from "react";
 import { LayoutList, Plus, UsersRound } from "lucide-react";
 
 import useTypedNavigate from "@/hooks/useTypedNavigate.hook";
@@ -21,6 +21,7 @@ import ItemCardComponent from "@/components/items/ItemCard.component";
 import PlayerCardComponent from "@/components/players/PlayerCard.component";
 import ItemBoxComponent from "@/components/items/ItemBox.component";
 import AddXpModal from "@/screens/auth/home/components/modals/AddXp.modal";
+import ItemContextMenuComponent from "./components/ItemContextMenu.component";
 
 const HomeScreen = () => {
   const { t } = useTranslation("home");
@@ -33,23 +34,23 @@ const HomeScreen = () => {
     (localStorage.getItem("itemDisplay") ?? "box") as ItemDisplay,
   );
 
-  const loadPlayers = useCallback(() => {
+  const loadPlayers = () => {
     playerService.getPlayers().subscribe({
       next: setPlayers,
       error: (err) => {
         console.log(err);
       },
     });
-  }, []);
+  };
 
-  const loadItems = useCallback(() => {
+  const loadItems = () => {
     itemService.getItems().subscribe({
       next: setItems,
       error: (err) => {
         console.log(err);
       },
     });
-  }, []);
+  };
 
   useEffect(() => {
     loadPlayers();
@@ -104,13 +105,15 @@ const HomeScreen = () => {
           )}
         >
           {items?.length ? (
-            items.map((item) =>
-              itemDisplay === "box" ? (
-                <ItemBoxComponent item={item} key={item.id} />
-              ) : (
-                <ItemCardComponent item={item} key={item.id} />
-              ),
-            )
+            items.map((item) => (
+              <ItemContextMenuComponent itemId={item.id} key={item.id}>
+                {itemDisplay === "box" ? (
+                  <ItemBoxComponent className="cursor-pointer" item={item} />
+                ) : (
+                  <ItemCardComponent className="cursor-pointer" item={item} />
+                )}
+              </ItemContextMenuComponent>
+            ))
           ) : (
             <p className="text-muted-foreground italic font-medium p-4 text-sm">
               {t("admin.noItem")}

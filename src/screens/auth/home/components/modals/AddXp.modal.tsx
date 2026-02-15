@@ -16,9 +16,7 @@ import {
 import TextFieldComponent from "@/components/inputs/TextField.component";
 import BoxedCheckboxComponent from "@/components/inputs/BoxedCheckbox.component";
 
-type AddXpModalProps = {};
-
-const AddXpModal = ({}: AddXpModalProps) => {
+const AddXpModal = () => {
   const { t } = useTranslation("home");
 
   const [open, setOpen] = useState(false);

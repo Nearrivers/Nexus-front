@@ -6,6 +6,7 @@ import { sessionQuery, sessionService } from "@/store/session";
 
 import AuthScreen from "@/screens/auth/Auth.screen";
 import UnauthScreens from "@/screens/unauth/UnAuth.screen";
+import WebSocketProvider from "@/contexts/wsProvider";
 
 const Screens = () => {
   const [loading, setLoading] = useState(true);
@@ -28,7 +29,9 @@ const Screens = () => {
   if (isAuthenticated) {
     return (
       <div className="w-full h-full">
-        <AuthScreen />
+        <WebSocketProvider playerId={player.id}>
+          <AuthScreen />
+        </WebSocketProvider>
       </div>
     );
   }

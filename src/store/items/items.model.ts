@@ -102,6 +102,13 @@ export type ItemAbility = {
   activation: string;
 };
 
+export type ItemOwner = {
+  item_id: string;
+  player_id: string;
+  player_name: string;
+  quantity: number;
+};
+
 export type ItemModel = {
   id: string;
   name: string;
@@ -115,6 +122,7 @@ export type ItemModel = {
   isConsumable: boolean;
   damages?: ItemDamage[];
   abilities?: ItemAbility[];
+  owners?: ItemOwner[];
 };
 
 const ItemDamageSchema = z.object({

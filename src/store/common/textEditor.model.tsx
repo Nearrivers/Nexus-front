@@ -34,7 +34,7 @@ export const PATTERN_CONFIGS: TextEditorPatternConfigMapModel = new Map([
           "gmi",
         );
       },
-      formatMatch: ([_, diceCount, diceSize, damageType, flatBonus]) => (
+      formatMatch: ([, diceCount, diceSize, damageType, flatBonus]) => (
         <span
           className={cn(
             "inline-flex items-center font-bold",

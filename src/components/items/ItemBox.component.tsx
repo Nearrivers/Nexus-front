@@ -16,9 +16,14 @@ import ItemCardComponent from "@/components/items/ItemCard.component";
 type ItemBoxComponentProps = {
   item: ItemModel;
   className?: string;
+  onClick?: () => void;
 };
 
-const ItemBoxComponent = ({ item, className }: ItemBoxComponentProps) => {
+const ItemBoxComponent = ({
+  item,
+  className,
+  onClick,
+}: ItemBoxComponentProps) => {
   const backgroundColor = RarityColors[item.rarity ?? "basic"];
 
   return (
@@ -26,6 +31,7 @@ const ItemBoxComponent = ({ item, className }: ItemBoxComponentProps) => {
       <HoverCardTrigger asChild>
         <Item
           variant="outline"
+          onClick={onClick}
           className={cn("p-0 overflow-hidden dark bg-background", className)}
         >
           <ItemContent

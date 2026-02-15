@@ -27,6 +27,7 @@ export const AUTH_ROUTES = {
   items: "/items",
   oneItem: "/items/:id",
   addItem: "/items/add",
+  updateItem: "/items/update/:id",
   demo: "/demo",
 } as const;
 

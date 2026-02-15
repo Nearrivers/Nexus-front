@@ -12,5 +12,15 @@
 		"lead": "L'expérience sera divisée entre les joueurs sélectionnés",
 		"xpAmount": "Total d'expérience à ajouter",
 		"xpPerPlayer": "Xp par joueur : {{xp}}"
+	},
+	"itemMenu": {
+		"update": "Modifier",
+		"owners": "Gérer le(s) propriétaire(s)",
+		"delete": "Supprimer"
+	},
+	"owners": {
+		"title": "Propriétaires",
+		"lead": "Gérez les propriétaires des objets ainsi que les quantités",
+		"ownersOf": "Propriétaires de : {{name}}"
 	}
 }

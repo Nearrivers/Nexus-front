@@ -1,6 +1,10 @@
 import { httpRequest } from "@/api/httpRequest";
 import type { ImageResponseModel } from "@/store/images";
-import type { ItemFormModel, ItemModel } from "@/store/items/items.model";
+import type {
+  ItemFormModel,
+  ItemModel,
+  ItemOwner,
+} from "@/store/items/items.model";
 import {
   type PlayerModel,
   type PlayerFormModel,
@@ -28,13 +32,14 @@ export const API_ROUTES = {
     httpRequest("/players/xp", "PUT", data),
   /* ------------- */
 
-  /* -- PLAYERS -- */
+  /* -- ITEM -- */
   POST_CREATE_ITEM: (data: Partial<ItemFormModel>) =>
     httpRequest<ItemModel>("/items", "POST", data),
   GET_ITEMS: () => httpRequest<ItemModel[]>("/items", "GET"),
-  GET_ONE_ITEM: (id: string) =>
-    httpRequest<PlayerModel[]>(`/items/${id}`, "GET"),
-  /* ------------- */
+  GET_ONE_ITEM: (id: string) => httpRequest<ItemModel>(`/items/${id}`, "GET"),
+  POST_ADD_ITEM_TO_INVENTORIES: (data: { owners: ItemOwner[] }) =>
+    httpRequest<ItemModel>("/inventories", "POST", data),
+  /* ---------- */
 
   /* -- IMAGES -- */
   POST_UPLOAD_IMAGE: (data: FormData) =>
