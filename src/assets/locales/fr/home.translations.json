@@ -6,5 +6,11 @@
 		"xp": "Ajouter de l'xp",
 		"items": "Objets",
 		"noItem": "Aucun objet"
+	},
+	"xpModal": {
+		"title": "Ajouter de l'xp aux joueurs",
+		"lead": "L'expérience sera divisée entre les joueurs sélectionnés",
+		"xpAmount": "Total d'expérience à ajouter",
+		"xpPerPlayer": "Xp par joueur : {{xp}}"
 	}
 }

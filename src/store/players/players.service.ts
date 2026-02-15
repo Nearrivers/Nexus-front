@@ -1,6 +1,8 @@
+import { from, map, tap } from "rxjs";
+import { setEntities } from "@ngneat/elf-entities";
+
 import { API_ROUTES } from "@/api/api.routes";
 import { playerStore, type PlayerFormModel } from "@/store/players";
-import { from, map } from "rxjs";
 
 class PlayerService {
   store = playerStore;
@@ -18,6 +20,7 @@ class PlayerService {
       map((response) => {
         return response.data;
       }),
+      tap((players) => this.store.update(setEntities(players))),
     );
   };
 
@@ -27,6 +30,10 @@ class PlayerService {
         return response.data;
       }),
     );
+  };
+
+  updatePlayersXp = (ids: string[], xp: number) => {
+    return from(API_ROUTES.PUT_UPDATE_PLAYERS_XP({ xp, ids }));
   };
 }
 

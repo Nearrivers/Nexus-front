@@ -4,6 +4,7 @@ import { createBrowserRouter } from "react-router";
 import { AUTH_ROUTES, type AuthRouteObject } from "@/@types/route-path";
 
 import RoleRedirect from "@/routers/role.redirect";
+import DemoScreen from "@/screens/demo";
 
 const AuthPagesLayout = lazy(() => import("@/components/AuthPage.layout"));
 const HomeScreen = lazy(() => import("@/screens/auth/home/Home.screen"));
@@ -32,6 +33,10 @@ const authRouter = createBrowserRouter([
           { path: AUTH_ROUTES.addRoute, element: <AddItemScreen /> },
           { path: AUTH_ROUTES.updateRoute, element: <></> },
         ],
+      },
+      {
+        path: AUTH_ROUTES.demo,
+        element: <DemoScreen />,
       },
       {
         path: "*",

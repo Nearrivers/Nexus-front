@@ -1,10 +1,12 @@
-import { useCallback, useEffect, useState } from "react";
-import { Calculator, LayoutList, Plus, UsersRound } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useCallback, useEffect, useState } from "react";
+import { LayoutList, Plus, UsersRound } from "lucide-react";
 
 import useTypedNavigate from "@/hooks/useTypedNavigate.hook";
 
 import { AUTH_ROUTES } from "@/@types/route-path";
+
+import { cn } from "@/lib/utils";
 
 import { playerService, type PlayerModel } from "@/store/players";
 
@@ -18,7 +20,7 @@ import { itemService, type ItemModel } from "@/store/items";
 import ItemCardComponent from "@/components/items/ItemCard.component";
 import PlayerCardComponent from "@/components/players/PlayerCard.component";
 import ItemBoxComponent from "@/components/items/ItemBox.component";
-import { cn } from "@/lib/utils";
+import AddXpModal from "@/screens/auth/home/components/modals/AddXp.modal";
 
 const HomeScreen = () => {
   const { t } = useTranslation("home");
@@ -70,13 +72,10 @@ const HomeScreen = () => {
             >
               <Plus />
             </Button>
-            <Button size="sm">
-              <Calculator />
-              <p className="text-xs">{t("admin.xp")}</p>
-            </Button>
+            <AddXpModal />
           </div>
         </header>
-        <article className="py-2 grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-4 lg:gap-4 lg:py-4">
+        <article className="py-2 grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3 lg:gap-4 lg:py-4">
           {players.length ? (
             players.map((p) => <PlayerCardComponent player={p} key={p.id} />)
           ) : (
@@ -98,7 +97,7 @@ const HomeScreen = () => {
         </header>
         <article
           className={cn(
-            "gap-4 py-2",
+            "gap-4 py-4",
             itemDisplay === "box"
               ? "justify-center flex-wrap flex"
               : "grid grid-cols-1 md:grid-cols-2",

@@ -27,6 +27,7 @@ export const AUTH_ROUTES = {
   items: "/items",
   oneItem: "/items/:id",
   addItem: "/items/add",
+  demo: "/demo",
 } as const;
 
 export type UnAuthRoutes = (typeof UNAUTH_ROUTES)[keyof typeof UNAUTH_ROUTES];

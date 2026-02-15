@@ -96,6 +96,12 @@ export type ItemDamage = {
   created_at: Date;
 };
 
+export type ItemAbility = {
+  name: string;
+  description: string;
+  activation: string;
+};
+
 export type ItemModel = {
   id: string;
   name: string;
@@ -104,9 +110,11 @@ export type ItemModel = {
   rarity: Rarity;
   description: string;
   weight: number;
+  requires_attunement: boolean;
   isEquippable: boolean;
   isConsumable: boolean;
   damages?: ItemDamage[];
+  abilities?: ItemAbility[];
 };
 
 const ItemDamageSchema = z.object({
@@ -129,6 +137,20 @@ const ItemDamageFormSchema = z.object({
 
 export type ItemDamageFormModel = z.infer<typeof ItemDamageFormSchema>;
 
+const ItemAbilitySchema = z.object({
+  name: FieldValidationType.REQUIRED_STRING,
+  description: FieldValidationType.OPTIONAL_STRING,
+  activation: FieldValidationType.OPTIONAL_STRING,
+});
+
+const ItemAbilityFormSchema = z.object({
+  name: FieldValidationType.OPTIONAL_STRING,
+  description: FieldValidationType.OPTIONAL_STRING,
+  activation: FieldValidationType.OPTIONAL_STRING,
+});
+
+export type ItemAbilityFormModel = z.infer<typeof ItemAbilityFormSchema>;
+
 export const ItemSchema = z.object({
   name: FieldValidationType.REQUIRED_STRING,
   type: FieldValidationType.REQUIRED_STRING,
@@ -140,6 +162,7 @@ export const ItemSchema = z.object({
   requires_attunement: FieldValidationType.REQUIRED_BOOLEAN,
   isConsumable: FieldValidationType.REQUIRED_BOOLEAN,
   damages: z.array(ItemDamageSchema).optional(),
+  abilities: z.array(ItemAbilitySchema).optional(),
 });
 
 export const ItemFormSchema = z.object({
@@ -153,6 +176,7 @@ export const ItemFormSchema = z.object({
   requires_attunement: FieldValidationType.OPTIONAL_BOOLEAN,
   isConsumable: FieldValidationType.OPTIONAL_BOOLEAN,
   damages: z.array(ItemDamageFormSchema).optional(),
+  abilities: z.array(ItemAbilityFormSchema).optional(),
 });
 
 export type ItemFormModel = z.infer<typeof ItemFormSchema>;
@@ -163,6 +187,25 @@ export function hashDiceDamageKey(
 ): string {
   return JSON.stringify([diceSize, damageType]);
 }
+
+export const attributeColorVariant = {
+  acid: "text-[#80b000]",
+  slashing: "text-[#8c8c8c]",
+  bludgeoning: "text-[#8c8c8c]",
+  piercing: "text-[#8c8c8c]",
+  force: "text-[cc3333]",
+  fire: "text-[#ee5500]",
+  radiant: "text-[#ccaa00]",
+  poison: "text-[#44bb00]",
+  necrotic: "text-[#40b050]",
+  healing: "text-[#30bbbb]",
+  cold: "text-[#3399cc]",
+  lightning: "text-[#3366cc]",
+  thunder: "text-[#8844bb]",
+  psychic: "text-[#cc77aa]",
+} satisfies {
+  [K in DamageType]: string;
+};
 
 export const DiceImages = new Map<string, string>();
 DiceImages.set(

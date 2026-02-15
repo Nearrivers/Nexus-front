@@ -3,19 +3,22 @@ import { type CSSProperties } from "react";
 
 import { RarityColors, type ItemModel } from "@/store/items/items.model";
 
+import { cn } from "@/lib/utils";
+
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
-import { Item, ItemContent } from "../ui/item";
-import ItemCardComponent from "./ItemCard.component";
+import { Item, ItemContent } from "@/components/ui/item";
+import ItemCardComponent from "@/components/items/ItemCard.component";
 
 type ItemBoxComponentProps = {
   item: ItemModel;
+  className?: string;
 };
 
-const ItemBoxComponent = ({ item }: ItemBoxComponentProps) => {
+const ItemBoxComponent = ({ item, className }: ItemBoxComponentProps) => {
   const backgroundColor = RarityColors[item.rarity ?? "basic"];
 
   return (
@@ -23,7 +26,7 @@ const ItemBoxComponent = ({ item }: ItemBoxComponentProps) => {
       <HoverCardTrigger asChild>
         <Item
           variant="outline"
-          className="p-0 overflow-hidden dark bg-background"
+          className={cn("p-0 overflow-hidden dark bg-background", className)}
         >
           <ItemContent
             style={

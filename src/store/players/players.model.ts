@@ -26,3 +26,8 @@ export const PlayerFormModel = z.object({
 });
 
 export type PlayerFormModel = z.infer<typeof PlayerSchema>;
+
+export type PlayerXpModel = {
+  xp: number;
+  ids: string[];
+};

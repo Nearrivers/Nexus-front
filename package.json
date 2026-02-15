@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@floating-ui/react": "^0.27.17",
     "@ngneat/elf": "^2.5.1",
     "@ngneat/elf-entities": "^5.0.2",
     "@ngneat/elf-pagination": "^1.1.0",

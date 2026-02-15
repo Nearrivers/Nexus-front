@@ -7,7 +7,7 @@ type TextAreaFieldComponentProps = ComponentProps<"textarea"> & {
   id: string;
   label: string;
   value: string | number | undefined;
-  handleChange: (value: string) => void;
+  handleChange?: (value: string) => void;
   errors?: string | string[];
 };
 
@@ -15,6 +15,7 @@ const TextAreaFieldComponent = ({
   id,
   label,
   value,
+  onChange,
   handleChange,
   errors,
   className,
@@ -27,7 +28,10 @@ const TextAreaFieldComponent = ({
         id={id}
         {...props}
         value={value}
-        onChange={(evt) => handleChange(evt.target.value)}
+        onChange={(evt) => {
+          onChange?.(evt);
+          handleChange?.(evt.target.value);
+        }}
       />
       {errors && (
         <>

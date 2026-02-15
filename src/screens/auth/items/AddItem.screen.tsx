@@ -16,6 +16,7 @@ import {
   ZodDiceSize,
   ZodRarity,
   type DiceSize,
+  type ItemAbilityFormModel,
   type ItemDamageFormModel,
   type ItemFormModel,
 } from "@/store/items/items.model";
@@ -53,6 +54,7 @@ const AddItemScreen = () => {
 
   const [loading, setLoading] = useState(false);
   const [hasDamage, setHasDamage] = useState(false);
+  const [hasAbilities, setHasAbilities] = useState(false);
 
   const { data, setData, errors, displayErrors } = useForm(
     ItemFormSchema,
@@ -64,6 +66,7 @@ const AddItemScreen = () => {
       imageUrl: undefined,
       isConsumable: false,
       isEquippable: false,
+      requires_attunement: false,
       rarity: undefined,
       weight: 0,
       damages: undefined,
@@ -79,9 +82,19 @@ const AddItemScreen = () => {
     proficiency_bonus: undefined,
   };
 
+  const emptyAbility = {
+    name: undefined,
+    description: undefined,
+    activation: undefined,
+  };
+
   const [damagesBuffer, setDamageBuffer] = useState<ItemDamageFormModel[]>([
     emptyDamage,
   ]);
+
+  const [abilitiesBuffer, setAbilitiesBuffer] = useState<
+    ItemAbilityFormModel[]
+  >([emptyAbility]);
 
   const diceCountValues = Array.from({ length: 10 }, (_, i) => i + 1);
   const diceSizeValues = Array.from(
@@ -325,7 +338,115 @@ const AddItemScreen = () => {
                     }
                   />
                 </FieldGroup>
-                {hasDamage && !!data.damages && !!data.damages.length && (
+                <CheckboxComponent
+                  id="hasAbilities"
+                  label={t("form.hasAbilities")}
+                  disabled={loading}
+                  checked={hasAbilities}
+                  handleChange={(checked) => {
+                    setHasAbilities(!!checked);
+                    if (checked) {
+                      setData((state) => ({
+                        ...state,
+                        abilities: abilitiesBuffer,
+                      }));
+                      return;
+                    }
+
+                    setAbilitiesBuffer(data.abilities ?? []);
+                    setData((state) => ({
+                      ...state,
+                      abilities: undefined,
+                    }));
+                  }}
+                />
+                {hasAbilities && data.abilities && data.abilities.length && (
+                  <section className="flex flex-col gap-4 relative">
+                    <hr />
+                    <p className="leading-none font-semibold">
+                      {t("form.itemAbilities")}
+                    </p>
+                    {data.abilities.map((a, index) => (
+                      <Item variant="outline" key={index}>
+                        {data.abilities && data.abilities.length > 1 && (
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon-sm"
+                            className="text-destructive absolute top-1 right-1"
+                            onClick={() =>
+                              setData((state) => ({
+                                ...state,
+                                abilities: state.abilities?.filter(
+                                  (_, i) => i !== index,
+                                ),
+                              }))
+                            }
+                          >
+                            <Trash2 />
+                          </Button>
+                        )}
+                        <TextFieldComponent
+                          id={`ability-${index}-name`}
+                          required
+                          disabled={loading}
+                          label={t("form.name")}
+                          value={a.name}
+                          handleChange={(name) =>
+                            setData((state) => ({
+                              ...state,
+                              abilities: state.abilities?.map((a, ai) =>
+                                ai === index
+                                  ? {
+                                      ...a,
+                                      name: name,
+                                    }
+                                  : a,
+                              ),
+                            }))
+                          }
+                          errors={errors?.abilities}
+                        />
+                        <TextAreaFieldComponent
+                          required
+                          id={`ability-${index}-description`}
+                          rows={6}
+                          value={a.description}
+                          label={t("form.description")}
+                          handleChange={(description) =>
+                            setData((state) => ({
+                              ...state,
+                              abilities: state.abilities?.map((a, ai) =>
+                                ai === index
+                                  ? {
+                                      ...a,
+                                      description,
+                                    }
+                                  : a,
+                              ),
+                            }))
+                          }
+                          errors={errors?.abilities}
+                        />
+                      </Item>
+                    ))}
+                    <Button
+                      variant="outline"
+                      type="button"
+                      onClick={() =>
+                        setData((state) => ({
+                          ...state,
+                          abilities: (state.abilities ?? []).concat(
+                            emptyAbility,
+                          ),
+                        }))
+                      }
+                    >
+                      {t("buttons.addDice", { ns: "global" })}
+                    </Button>
+                  </section>
+                )}
+                {hasDamage && data.damages && data.damages.length && (
                   <section className="flex flex-col gap-4">
                     <p className="leading-none font-semibold">
                       {t("form.itemDamages")}

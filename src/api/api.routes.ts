@@ -1,7 +1,11 @@
 import { httpRequest } from "@/api/httpRequest";
 import type { ImageResponseModel } from "@/store/images";
 import type { ItemFormModel, ItemModel } from "@/store/items/items.model";
-import { type PlayerModel, type PlayerFormModel } from "@/store/players";
+import {
+  type PlayerModel,
+  type PlayerFormModel,
+  type PlayerXpModel,
+} from "@/store/players";
 
 import { type LoginModel } from "@/store/session";
 
@@ -19,7 +23,9 @@ export const API_ROUTES = {
     httpRequest<PlayerModel>("/players", "POST", data),
   GET_PLAYERS: () => httpRequest<PlayerModel[]>("/players", "GET"),
   GET_ONE_PLAYER: (id: string) =>
-    httpRequest<PlayerModel[]>(`/players/${id}`, "GET"),
+    httpRequest<PlayerModel[]>(`/players/one/${id}`, "GET"),
+  PUT_UPDATE_PLAYERS_XP: (data: Partial<PlayerXpModel>) =>
+    httpRequest("/players/xp", "PUT", data),
   /* ------------- */
 
   /* -- PLAYERS -- */

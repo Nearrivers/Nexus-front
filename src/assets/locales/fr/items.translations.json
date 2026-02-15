@@ -30,7 +30,10 @@
 		"proficiencyBonus": "Utilise le bonus de maîtrise ?",
 		"modifier": "+ Modificateur de {{attribute}}",
 		"proficiency": "+ Bonus de maîtrise",
-		"enchanted": "Enchantement : +{{bonus}}"
+		"enchanted": "Enchantement : +{{bonus}}",
+		"attunement": "Nécessite une harmonisation",
+		"hasAbilities": "Possède des capacités spéciales ?",
+		"itemAbilities": "Capacités spéciales"
 	},
 	"rarities": {
 		"basic": "Basique",

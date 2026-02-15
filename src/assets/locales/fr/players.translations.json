@@ -9,5 +9,5 @@
 		"totalXP": "XP"
 	},
 	"level": "Nv.{{level}}",
-	"nextLevel": "Xp nécessaire pour prochain niveau : {{xp}}"
+	"nextLevel": "Xp nécessaire pour le prochain niveau : {{xp}}"
 }
