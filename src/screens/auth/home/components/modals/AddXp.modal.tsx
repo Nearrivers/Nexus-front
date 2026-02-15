@@ -15,6 +15,11 @@ import {
 } from "@/components/ui/dialog";
 import TextFieldComponent from "@/components/inputs/TextField.component";
 import BoxedCheckboxComponent from "@/components/inputs/BoxedCheckbox.component";
+import {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+} from "@/components/ui/tooltip";
 
 const AddXpModal = () => {
   const { t } = useTranslation("home");
@@ -39,10 +44,20 @@ const AddXpModal = () => {
 
   return (
     <Dialog open={open}>
-      <Button size="sm" onClick={() => setOpen(true)}>
-        <Calculator />
-        <p className="text-xs">{t("admin.xp")}</p>
-      </Button>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            size="icon-sm"
+            variant="outline"
+            onClick={() => setOpen(true)}
+          >
+            <Calculator />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>{t("buttons.addXp", { ns: "global" })}</p>
+        </TooltipContent>
+      </Tooltip>
       <DialogContent>
         <DialogTitle>{t("xpModal.title")}</DialogTitle>
         <DialogDescription>{t("xpModal.lead")}</DialogDescription>

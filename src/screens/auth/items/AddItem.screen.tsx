@@ -19,8 +19,10 @@ import {
   type ItemAbilityFormModel,
   type ItemDamageFormModel,
   type ItemFormModel,
+  type ItemOwner,
 } from "@/store/items/items.model";
 import { itemService } from "@/store/items";
+import { imagesService } from "@/store/images";
 
 import {
   Card,
@@ -40,12 +42,12 @@ import {
 import { Item } from "@/components/ui/item";
 import { Button } from "@/components/ui/button";
 import { Field, FieldGroup } from "@/components/ui/field";
+import OwnersModal from "@/components/items/Owners.modal";
 import SelectComponent from "@/components/inputs/Select.component";
 import ItemCardComponent from "@/components/items/ItemCard.component";
 import CheckboxComponent from "@/components/inputs/Checkbox.component";
 import TextFieldComponent from "@/components/inputs/TextField.component";
 import FileFieldComponent from "@/components/inputs/FileField.component";
-import { imagesService } from "@/store/images";
 import TextAreaFieldComponent from "@/components/inputs/TextAreaField.component";
 
 const AddItemScreen = () => {
@@ -53,6 +55,7 @@ const AddItemScreen = () => {
   const navigate = useTypedNavigate();
 
   const [loading, setLoading] = useState(false);
+  const [itemId, setItemId] = useState<string>("");
   const [hasDamage, setHasDamage] = useState(false);
   const [hasAbilities, setHasAbilities] = useState(false);
 
@@ -67,7 +70,7 @@ const AddItemScreen = () => {
       isConsumable: false,
       isEquippable: false,
       requires_attunement: false,
-      rarity: undefined,
+      rarity: "basic",
       weight: 0,
       damages: undefined,
     } as ItemFormModel,
@@ -119,7 +122,9 @@ const AddItemScreen = () => {
       .createItem(data)
       .pipe(finalize(() => setLoading(false)))
       .subscribe({
-        next: () => navigate(AUTH_ROUTES.home),
+        next: (item) => {
+          setItemId(item.id);
+        },
       });
   };
 
@@ -138,8 +143,30 @@ const AddItemScreen = () => {
     });
   };
 
+  const handleCloseOwnersModal = (itemOwners?: ItemOwner[]) => {
+    if (!itemOwners) {
+      setItemId("");
+      navigate(AUTH_ROUTES.home);
+      return;
+    }
+
+    itemService
+      .addItemToInventories(itemOwners.filter((i) => i.quantity > 0))
+      .subscribe({
+        next: () => {
+          navigate(AUTH_ROUTES.home);
+          setItemId("");
+        },
+      });
+  };
+
   return (
     <section className="flex justify-center w-full">
+      <OwnersModal
+        open={!!itemId}
+        itemId={itemId}
+        handleClose={handleCloseOwnersModal}
+      />
       <form
         noValidate
         id="item-form"
@@ -192,7 +219,7 @@ const AddItemScreen = () => {
                   }
                   errors={errors?.name}
                 />
-                <FieldGroup>
+                <FieldGroup className="border p-4 rounded-xl">
                   <TextFieldComponent
                     id="imageUrl"
                     required
@@ -212,9 +239,9 @@ const AddItemScreen = () => {
                     accept="image/*"
                     id="imageUrlFile"
                     disabled={loading}
-                    label={t("form.imageUrl")}
-                    onChange={handleFileUpload}
                     errors={errors?.imageUrl}
+                    onChange={handleFileUpload}
+                    label={t("form.uploadImage")}
                   />
                 </FieldGroup>
                 <TextFieldComponent
@@ -242,6 +269,7 @@ const AddItemScreen = () => {
                         rarity,
                       }))
                     }
+                    errors={errors?.rarity}
                     placeholder={t("form.rarityPlaceholder")}
                     selectItems={ZodRarity.options.map((r) => ({
                       label: t(`rarities.${r}`),

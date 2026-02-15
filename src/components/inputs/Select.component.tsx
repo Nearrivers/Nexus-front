@@ -5,7 +5,7 @@ import {
   SelectItem,
   SelectValue,
 } from "@/components/ui/select";
-import { Field, FieldLabel } from "../ui/field";
+import { Field, FieldError, FieldLabel } from "../ui/field";
 
 type SelectItemModel<T extends string> = {
   label: string;
@@ -17,16 +17,18 @@ type SelectComponentProps<T extends string> = {
   id: string;
   label: string;
   placeholder: string;
+  errors?: string | string[];
   handleChange: (value: T) => void;
   selectItems: SelectItemModel<T>[];
 };
 
 const SelectComponent = <T extends string>({
-  selectItems,
-  placeholder,
+  id,
   label,
   value,
-  id,
+  errors,
+  selectItems,
+  placeholder,
   handleChange,
 }: SelectComponentProps<T>) => {
   return (
@@ -48,6 +50,15 @@ const SelectComponent = <T extends string>({
           ))}
         </SelectContent>
       </Select>
+      {errors && (
+        <>
+          {typeof errors === "string" ? (
+            <FieldError>{errors}</FieldError>
+          ) : (
+            errors.map((err) => <FieldError>{err}</FieldError>)
+          )}
+        </>
+      )}
     </Field>
   );
 };

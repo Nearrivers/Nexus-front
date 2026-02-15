@@ -13,7 +13,7 @@ import {
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
 import { itemService, type ItemOwner } from "@/store/items";
-import OwnersModal from "./modals/Owners.modal";
+import OwnersModal from "../../../../components/items/Owners.modal";
 
 type ItemContextMenuComponentProps = {
   itemId: string;
@@ -49,6 +49,10 @@ const ItemContextMenuComponent = ({
       .subscribe();
   };
 
+  const handleDeleteClick = () => {
+    itemService.deleteItem(itemId).subscribe();
+  };
+
   return (
     <ContextMenu onOpenChange={handleOpenChange}>
       <ContextMenuTrigger>{children}</ContextMenuTrigger>
@@ -65,7 +69,10 @@ const ItemContextMenuComponent = ({
           <Users />
           {t("itemMenu.owners")}
         </ContextMenuItem>
-        <ContextMenuItem variant="destructive">
+        <ContextMenuItem
+          variant="destructive"
+          onClick={() => handleDeleteClick()}
+        >
           <Trash2 />
           {t("itemMenu.delete")}
         </ContextMenuItem>

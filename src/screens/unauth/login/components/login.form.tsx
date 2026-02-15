@@ -24,11 +24,12 @@ export function LoginForm({ className, ...props }: ComponentProps<"div">) {
 
   const [loading, setLoading] = useState(false);
 
+  // TODO: Penser à retirer le code une fois le projet terminé
   const { data, setData, errors, displayErrors } = useForm(
     undefined,
     LoginSchema,
     {
-      password: "",
+      password: "273587120",
     } satisfies LoginModel,
   );
 

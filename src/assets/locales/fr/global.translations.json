@@ -11,7 +11,8 @@
 		"addDice": "Ajouter un dé",
 		"boxDisplay": "Afficher en boîtes",
 		"cardDisplay": "Afficher en cartes",
-		"createItem": "Créer un nouvel objet"
+		"createItem": "Créer un nouvel objet",
+		"addXp": "Ajouter de l'xp"
 	},
 	"modeToggle": {
 		"lead": "Modifier le thème",

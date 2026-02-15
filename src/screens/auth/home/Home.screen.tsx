@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useObservable } from "@ngneat/react-rxjs";
 import { LayoutList, Plus, UsersRound } from "lucide-react";
 
 import useTypedNavigate from "@/hooks/useTypedNavigate.hook";
@@ -8,15 +9,21 @@ import { AUTH_ROUTES } from "@/@types/route-path";
 
 import { cn } from "@/lib/utils";
 
-import { playerService, type PlayerModel } from "@/store/players";
+import { itemService, itemsQuery } from "@/store/items";
+import { playerService, playersQuery } from "@/store/players";
 
 import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import H1Typo from "@/components/ui/typographies/h1";
+import H2Typo from "@/components/ui/typographies/h2";
+import { ButtonGroup } from "@/components/ui/button-group";
 import ItemDisplayComponent, {
   type ItemDisplay,
 } from "@/components/items/ItemDisplay.component";
-import H1Typo from "@/components/ui/typographies/h1";
-import H2Typo from "@/components/ui/typographies/h2";
-import { itemService, type ItemModel } from "@/store/items";
 import ItemCardComponent from "@/components/items/ItemCard.component";
 import PlayerCardComponent from "@/components/players/PlayerCard.component";
 import ItemBoxComponent from "@/components/items/ItemBox.component";
@@ -27,34 +34,16 @@ const HomeScreen = () => {
   const { t } = useTranslation("home");
   const navigate = useTypedNavigate();
 
-  const [players, setPlayers] = useState<PlayerModel[]>([]);
-  const [items, setItems] = useState<ItemModel[]>([]);
+  const [items] = useObservable(itemsQuery.items$);
+  const [players] = useObservable(playersQuery.players$);
 
   const [itemDisplay, setItemDisplay] = useState(
     (localStorage.getItem("itemDisplay") ?? "box") as ItemDisplay,
   );
 
-  const loadPlayers = () => {
-    playerService.getPlayers().subscribe({
-      next: setPlayers,
-      error: (err) => {
-        console.log(err);
-      },
-    });
-  };
-
-  const loadItems = () => {
-    itemService.getItems().subscribe({
-      next: setItems,
-      error: (err) => {
-        console.log(err);
-      },
-    });
-  };
-
   useEffect(() => {
-    loadPlayers();
-    loadItems();
+    playerService.getPlayers().subscribe();
+    itemService.getItems().subscribe();
   }, []);
 
   return (
@@ -67,13 +56,23 @@ const HomeScreen = () => {
             <H2Typo>{t("admin.players")}</H2Typo>
           </div>
           <div className="flex gap-2">
-            <Button
-              size="icon-sm"
-              onClick={() => navigate(AUTH_ROUTES.addPlayer)}
-            >
-              <Plus />
-            </Button>
-            <AddXpModal />
+            <ButtonGroup>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    size="icon-sm"
+                    variant="outline"
+                    onClick={() => navigate(AUTH_ROUTES.addPlayer)}
+                  >
+                    <Plus />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{t("buttons.createPlayer", { ns: "global" })}</p>
+                </TooltipContent>
+              </Tooltip>
+              <AddXpModal />
+            </ButtonGroup>
           </div>
         </header>
         <article className="py-2 grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3 lg:gap-4 lg:py-4">

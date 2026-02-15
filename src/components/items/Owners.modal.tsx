@@ -1,9 +1,9 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { useObservable } from "@ngneat/react-rxjs";
 
 import { itemsQuery, type ItemOwner } from "@/store/items";
-import { playersQuery } from "@/store/players";
+import { playerService, playersQuery } from "@/store/players";
 
 import {
   Dialog,
@@ -31,8 +31,8 @@ type OwnersModalProps = {
 const OwnersModal = ({ itemId, open, handleClose }: OwnersModalProps) => {
   const { t } = useTranslation("home");
 
-  const [item] = useObservable(itemsQuery.activeItem$(itemId));
   const [players] = useObservable(playersQuery.players$);
+  const [item] = useObservable(itemsQuery.activeItem$(itemId));
 
   const [itemsWithQuantities, setItemsWithQuantities] = useState<ItemOwner[]>(
     players.map((p) => ({
@@ -42,6 +42,12 @@ const OwnersModal = ({ itemId, open, handleClose }: OwnersModalProps) => {
       quantity: item?.owners?.find((o) => o.player_id === p.id)?.quantity ?? 0,
     })),
   );
+
+  useEffect(() => {
+    if (!players.length) {
+      playerService.getPlayers().subscribe();
+    }
+  }, []);
 
   const handleSubmit = (evt: FormEvent) => {
     evt.preventDefault();

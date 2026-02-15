@@ -39,6 +39,7 @@ export const API_ROUTES = {
   GET_ONE_ITEM: (id: string) => httpRequest<ItemModel>(`/items/${id}`, "GET"),
   POST_ADD_ITEM_TO_INVENTORIES: (data: { owners: ItemOwner[] }) =>
     httpRequest<ItemModel>("/inventories", "POST", data),
+  DELETE_ITEM: (id: string) => httpRequest(`/items/${id}`, "DELETE"),
   /* ---------- */
 
   /* -- IMAGES -- */

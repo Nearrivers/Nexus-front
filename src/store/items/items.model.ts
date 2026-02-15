@@ -163,7 +163,7 @@ export const ItemSchema = z.object({
   name: FieldValidationType.REQUIRED_STRING,
   type: FieldValidationType.REQUIRED_STRING,
   imageUrl: z.string().optional(),
-  rarity: ZodRarity.optional(),
+  rarity: ZodRarity,
   description: FieldValidationType.REQUIRED_STRING,
   weight: FieldValidationType.REQUIRED_NUMBER,
   isEquippable: FieldValidationType.REQUIRED_BOOLEAN,

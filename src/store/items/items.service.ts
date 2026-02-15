@@ -1,6 +1,7 @@
 import { from, map, tap } from "rxjs";
 import {
   addEntities,
+  deleteEntities,
   resetActiveId,
   setActiveId,
   setEntities,
@@ -23,7 +24,7 @@ class ItemService {
       map((response) => {
         return response.data;
       }),
-      tap((item) => itemsStore.update(addEntities(item))),
+      tap((item) => this.store.update(addEntities(item))),
     );
   };
 
@@ -32,7 +33,7 @@ class ItemService {
       map((response) => {
         return response.data;
       }),
-      tap((items) => itemsStore.update(setEntities(items))),
+      tap((items) => this.store.update(setEntities(items))),
     );
   };
 
@@ -43,7 +44,13 @@ class ItemService {
       map((response) => {
         return response.data;
       }),
-      tap((item) => itemsStore.update(upsertEntities(item))),
+      tap((item) => this.store.update(upsertEntities(item))),
+    );
+  };
+
+  deleteItem = (itemId: string) => {
+    return from(API_ROUTES.DELETE_ITEM(itemId)).pipe(
+      tap(() => this.store.update(deleteEntities(itemId))),
     );
   };
 }
