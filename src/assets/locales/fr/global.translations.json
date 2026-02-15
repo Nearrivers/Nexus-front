@@ -2,5 +2,11 @@
 	"buttons": {
 		"login": "Se connecter",
 		"signUp": "S'inscrire"
+	},
+	"modeToggle": {
+		"lead": "Modifier le thème",
+		"light": "Clair",
+		"dark": "Sombre",
+		"system": "Système"
 	}
 }
