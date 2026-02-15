@@ -8,6 +8,7 @@ export const ZodRarity = z.enum([
   "rare",
   "very_rare",
   "legendary",
+  "quest_item",
 ]);
 
 export type Rarity = z.infer<typeof ZodRarity>;
@@ -20,7 +21,7 @@ type RarityTextAndBgColors = {
 export const RarityColors: Record<Rarity, RarityTextAndBgColors> = {
   basic: {
     bgColor: "#1B1A1999",
-    textColor: "var(--text-muted-foreground)",
+    textColor: "#FFF",
   },
   common: {
     bgColor: "#00491599",
@@ -37,6 +38,10 @@ export const RarityColors: Record<Rarity, RarityTextAndBgColors> = {
   legendary: {
     bgColor: "#563E0D99",
     textColor: "#B7861D",
+  },
+  quest_item: {
+    bgColor: "#561D0099",
+    textColor: "#FF5901",
   },
 };
 
@@ -132,6 +137,7 @@ export const ItemSchema = z.object({
   description: FieldValidationType.REQUIRED_STRING,
   weight: FieldValidationType.REQUIRED_NUMBER,
   isEquippable: FieldValidationType.REQUIRED_BOOLEAN,
+  requires_attunement: FieldValidationType.REQUIRED_BOOLEAN,
   isConsumable: FieldValidationType.REQUIRED_BOOLEAN,
   damages: z.array(ItemDamageSchema).optional(),
 });
@@ -144,6 +150,7 @@ export const ItemFormSchema = z.object({
   description: FieldValidationType.OPTIONAL_STRING,
   weight: FieldValidationType.OPTIONAL_NUMBER,
   isEquippable: FieldValidationType.OPTIONAL_BOOLEAN,
+  requires_attunement: FieldValidationType.OPTIONAL_BOOLEAN,
   isConsumable: FieldValidationType.OPTIONAL_BOOLEAN,
   damages: z.array(ItemDamageFormSchema).optional(),
 });

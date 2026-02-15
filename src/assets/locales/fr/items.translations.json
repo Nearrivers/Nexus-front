@@ -12,6 +12,7 @@
 		"rarityPlaceholder": "Sélectionnez une rareté",
 		"weight": "Poids",
 		"hasDamage": "Peut faire des dégâts ?",
+		"requiresAttunement": "Nécessite une harmonisation ?",
 		"drawerTitle": "Aperçu de l'objet. Vous pouvez le faire glisser vers le bas pour le fermer",
 		"itemDamages": "Dés de dégâts",
 		"diceCount": "Nb de dés",
@@ -36,7 +37,8 @@
 		"common": "Commun",
 		"rare": "Rare",
 		"very_rare": "Épique",
-		"legendary": "Légendaire"
+		"legendary": "Légendaire",
+		"quest_item": "Objet de quête"
 	},
 	"damageTypes": {
 		"slashing": "Tranchant",

@@ -23,7 +23,6 @@ const PlayerCardComponent = ({ player }: PlayerCardComponentProps) => {
       <ItemContent>
         <ItemTitle className="text-lg">{player.name}</ItemTitle>
         <ItemDescription>
-          {player.class}{" "}
           {t("level", { level: getLevel(player.total_experience) })}
         </ItemDescription>
         <ItemDescription>

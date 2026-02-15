@@ -8,12 +8,17 @@ import { AUTH_ROUTES } from "@/@types/route-path";
 
 import { playerService, type PlayerModel } from "@/store/players";
 
+import { Button } from "@/components/ui/button";
+import ItemDisplayComponent, {
+  type ItemDisplay,
+} from "@/components/items/ItemDisplay.component";
 import H1Typo from "@/components/ui/typographies/h1";
 import H2Typo from "@/components/ui/typographies/h2";
-import { Button } from "@/components/ui/button";
-import PlayerCardComponent from "@/components/players/PlayerCard.component";
 import { itemService, type ItemModel } from "@/store/items";
 import ItemCardComponent from "@/components/items/ItemCard.component";
+import PlayerCardComponent from "@/components/players/PlayerCard.component";
+import ItemBoxComponent from "@/components/items/ItemBox.component";
+import { cn } from "@/lib/utils";
 
 const HomeScreen = () => {
   const { t } = useTranslation("home");
@@ -21,6 +26,10 @@ const HomeScreen = () => {
 
   const [players, setPlayers] = useState<PlayerModel[]>([]);
   const [items, setItems] = useState<ItemModel[]>([]);
+
+  const [itemDisplay, setItemDisplay] = useState(
+    (localStorage.getItem("itemDisplay") ?? "box") as ItemDisplay,
+  );
 
   const loadPlayers = useCallback(() => {
     playerService.getPlayers().subscribe({
@@ -84,14 +93,25 @@ const HomeScreen = () => {
             <H2Typo>{t("admin.items")}</H2Typo>
           </div>
           <div className="flex gap-2">
-            <Button size="icon-sm" onClick={() => navigate("/items/add")}>
-              <Plus />
-            </Button>
+            <ItemDisplayComponent handleDisplayChange={setItemDisplay} />
           </div>
         </header>
-        <article>
-          {items.length ? (
-            items.map((item) => <ItemCardComponent item={item} key={item.id} />)
+        <article
+          className={cn(
+            "gap-4 py-2",
+            itemDisplay === "box"
+              ? "justify-center flex-wrap flex"
+              : "grid grid-cols-1 md:grid-cols-2",
+          )}
+        >
+          {items?.length ? (
+            items.map((item) =>
+              itemDisplay === "box" ? (
+                <ItemBoxComponent item={item} key={item.id} />
+              ) : (
+                <ItemCardComponent item={item} key={item.id} />
+              ),
+            )
           ) : (
             <p className="text-muted-foreground italic font-medium p-4 text-sm">
               {t("admin.noItem")}

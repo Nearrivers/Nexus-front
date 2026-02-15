@@ -8,7 +8,10 @@
 		"createPlayer": "Créer un nouveau joueur",
 		"createItem": "Créer un nouvel objet",
 		"close": "Fermer",
-		"addDice": "Ajouter un dé"
+		"addDice": "Ajouter un dé",
+		"boxDisplay": "Afficher en boîtes",
+		"cardDisplay": "Afficher en cartes",
+		"createItem": "Créer un nouvel objet"
 	},
 	"modeToggle": {
 		"lead": "Modifier le thème",

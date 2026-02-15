@@ -52,7 +52,6 @@ const AddItemScreen = () => {
   const navigate = useTypedNavigate();
 
   const [loading, setLoading] = useState(false);
-  const [_, setUploading] = useState(false);
   const [hasDamage, setHasDamage] = useState(false);
 
   const { data, setData, errors, displayErrors } = useForm(
@@ -115,21 +114,15 @@ const AddItemScreen = () => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    setUploading(true);
-
-    imagesService
-      .uploadImage(file)
-      .pipe(finalize(() => setUploading(false)))
-      .subscribe({
-        next: (img) => {
-          e.target.value = "";
-          console.log(img);
-          setData((state) => ({
-            ...state,
-            imageUrl: img.url,
-          }));
-        },
-      });
+    imagesService.uploadImage(file).subscribe({
+      next: (img) => {
+        e.target.value = "";
+        setData((state) => ({
+          ...state,
+          imageUrl: img.url,
+        }));
+      },
+    });
   };
 
   return (
@@ -262,6 +255,7 @@ const AddItemScreen = () => {
                 <TextAreaFieldComponent
                   required
                   id="description"
+                  rows={6}
                   value={data.description}
                   errors={errors?.description}
                   label={t("form.description")}
@@ -295,29 +289,42 @@ const AddItemScreen = () => {
                     }
                   />
                 </FieldGroup>
-                <hr />
-                <CheckboxComponent
-                  id="hasDamage"
-                  label={t("form.hasDamage")}
-                  disabled={loading}
-                  checked={hasDamage}
-                  handleChange={(checked) => {
-                    setHasDamage(!!checked);
-                    if (checked) {
+                <FieldGroup className="flex flex-row">
+                  <CheckboxComponent
+                    id="hasDamage"
+                    label={t("form.hasDamage")}
+                    disabled={loading}
+                    checked={hasDamage}
+                    handleChange={(checked) => {
+                      setHasDamage(!!checked);
+                      if (checked) {
+                        setData((state) => ({
+                          ...state,
+                          damages: damagesBuffer,
+                        }));
+                        return;
+                      }
+
+                      setDamageBuffer(data.damages ?? []);
                       setData((state) => ({
                         ...state,
-                        damages: damagesBuffer,
+                        damages: undefined,
                       }));
-                      return;
+                    }}
+                  />
+                  <CheckboxComponent
+                    id="requiresAttunement"
+                    label={t("form.requiresAttunement")}
+                    disabled={loading}
+                    checked={data.requires_attunement}
+                    handleChange={(checked) =>
+                      setData((state) => ({
+                        ...state,
+                        requires_attunement: !!checked,
+                      }))
                     }
-
-                    setDamageBuffer(data.damages ?? []);
-                    setData((state) => ({
-                      ...state,
-                      damages: undefined,
-                    }));
-                  }}
-                />
+                  />
+                </FieldGroup>
                 {hasDamage && !!data.damages && !!data.damages.length && (
                   <section className="flex flex-col gap-4">
                     <p className="leading-none font-semibold">

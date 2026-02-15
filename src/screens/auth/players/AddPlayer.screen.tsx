@@ -88,20 +88,6 @@ const AddPlayerScreen = () => {
                   errors={errors?.name}
                 />
                 <TextFieldComponent
-                  id="class-name"
-                  required
-                  disabled={loading}
-                  label={t("form.className")}
-                  value={data.class}
-                  handleChange={(cl) =>
-                    setData((state) => ({
-                      ...state,
-                      class: cl,
-                    }))
-                  }
-                  errors={errors?.class}
-                />
-                <TextFieldComponent
                   id="xp"
                   required
                   disabled={loading}
@@ -109,8 +95,6 @@ const AddPlayerScreen = () => {
                   label={t("form.totalXP")}
                   value={data.total_experience}
                   handleChange={(xp) => {
-                    console.log(xp, +xp);
-
                     setData((state) => ({
                       ...state,
                       total_experience: +xp,

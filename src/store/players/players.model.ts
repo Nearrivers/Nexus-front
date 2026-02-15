@@ -5,7 +5,6 @@ import { FieldValidationType } from "@/lib/zod.config";
 export type PlayerModel = {
   id: string;
   name: string;
-  class: string;
   total_experience: number;
   is_admin: boolean;
   created_at: Date;
@@ -15,7 +14,6 @@ export type PlayerModel = {
 export const PlayerSchema = z.object({
   name: FieldValidationType.REQUIRED_STRING,
   pinCode: FieldValidationType.REQUIRED_LENGTH_STRING(9),
-  class: FieldValidationType.REQUIRED_STRING,
   total_experience: FieldValidationType.REQUIRED_NUMBER,
   is_admin: FieldValidationType.REQUIRED_BOOLEAN,
 });
@@ -23,7 +21,6 @@ export const PlayerSchema = z.object({
 export const PlayerFormModel = z.object({
   name: FieldValidationType.REQUIRED_STRING,
   pinCode: FieldValidationType.REQUIRED_LENGTH_STRING(9),
-  class: FieldValidationType.REQUIRED_STRING,
   total_experience: FieldValidationType.REQUIRED_NUMBER,
   is_admin: FieldValidationType.REQUIRED_BOOLEAN,
 });
