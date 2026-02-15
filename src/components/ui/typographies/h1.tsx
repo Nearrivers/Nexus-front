@@ -12,7 +12,7 @@ const H1Typo = (props: H1TypoProps) => {
   return (
     <h1
       className={cn(
-        "scroll-m-20 text-4xl font-extrabold tracking-tight text-balance",
+        "scroll-m-20 text-2xl font-extrabold tracking-tight text-balance",
         className,
       )}
     >

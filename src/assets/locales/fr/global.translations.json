@@ -4,7 +4,8 @@
 		"signUp": "S'inscrire",
 		"cancel": "Annuler",
 		"save": "Enregistrer",
-		"delete": "Supprimer"
+		"delete": "Supprimer",
+		"createPlayer": "Créer un nouveau joueur"
 	},
 	"modeToggle": {
 		"lead": "Modifier le thème",

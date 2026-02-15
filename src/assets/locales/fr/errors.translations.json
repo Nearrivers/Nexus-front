@@ -2,7 +2,7 @@
 	"fields": {
 		"email": "L'email n'est pas au bon format",
 		"required": "Champ obligatoire",
-		"length": "8 caractères minimum",
+		"length": "{{length}} caractères minimum",
 		"min": "Pas assez de caractères",
 		"max": "Trop de caractères",
 		"uppercase": "Il faut une majuscule",

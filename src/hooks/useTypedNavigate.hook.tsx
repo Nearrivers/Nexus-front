@@ -1,13 +1,22 @@
 import { useNavigate } from "react-router";
 
-import type { AuthRoutes, UnAuthRoutes } from "@/@types/route-path";
+import {
+  buildPath,
+  type AppRoute,
+  type ExtractParams,
+} from "@/@types/route-path";
 
-const useTypedNavigate = () => {
-  const naviagte = useNavigate();
+export function useTypedNavigate() {
+  const navigate = useNavigate();
 
-  return (to: AuthRoutes | UnAuthRoutes) => {
-    naviagte(to);
+  return <T extends AppRoute>(
+    path: T,
+    ...args: keyof ExtractParams<T> extends never
+      ? []
+      : [params: ExtractParams<T>]
+  ) => {
+    navigate(args[0] ? buildPath(path, args[0]) : path);
   };
-};
+}
 
 export default useTypedNavigate;

@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 type H3TypoProps = {
   children: ReactNode;
-  className: string;
+  className?: string;
 };
 
 const H3Typo = (props: H3TypoProps) => {

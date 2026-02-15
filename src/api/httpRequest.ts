@@ -4,17 +4,28 @@ import { sessionService } from "@/store/session";
 
 type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
 
-export type FetchResult<T> =
-  | {
-      ok: true;
-      data: T;
-      error?: never;
-    }
-  | {
-      ok: false;
-      data?: never;
-      error: unknown;
-    };
+export class FetchError extends Error {
+  public readonly status: number;
+  public readonly statusText: string;
+
+  constructor(message: string, status: number, statusText: string) {
+    super(message);
+
+    this.name = new.target.name;
+    this.status = status;
+    this.statusText = statusText;
+
+    Object.setPrototypeOf(this, new.target.prototype);
+  }
+}
+
+type ErrorResponse = {
+  error: string;
+};
+
+export type FetchResult<T> = {
+  data: T;
+};
 
 export function BuildRequest(url: ApiRoutes, method: HttpMethod, body?: any) {
   const headers = new Headers();
@@ -43,29 +54,26 @@ export async function httpRequest<T>(
     const data = text ? JSON.parse(text) : null;
 
     return {
-      ok: true,
       data: data as T,
     };
   }
 
-  let errorBody: unknown = undefined;
+  let errorBody: ErrorResponse | undefined = undefined;
   try {
-    errorBody = await res.clone().json();
+    errorBody = (await res.clone().json()) as ErrorResponse;
   } catch {}
 
   if (
     res.status !== 401 ||
     req.url.includes("auth/refresh") ||
-    req.url.includes("auth/logout")
+    req.url.includes("auth/logout") ||
+    req.url.includes("auth/login")
   ) {
-    return {
-      ok: false,
-      error: {
-        status: res.status,
-        statusText: res.statusText,
-        errorBody,
-      },
-    };
+    throw new FetchError(
+      errorBody?.error ?? "SERVER_ERROR",
+      res.status,
+      res.statusText,
+    );
   }
 
   const refreshResponse = await sessionService.refreshToken();
@@ -74,12 +82,9 @@ export async function httpRequest<T>(
   }
 
   await sessionService.logout();
-  return {
-    ok: false,
-    error: {
-      status: res.status,
-      statusText: res.statusText,
-      errorBody,
-    },
-  };
+  throw new FetchError(
+    errorBody?.error ?? "SERVER_ERROR",
+    res.status,
+    res.statusText,
+  );
 }

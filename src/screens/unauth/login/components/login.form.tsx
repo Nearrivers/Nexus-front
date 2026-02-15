@@ -1,6 +1,5 @@
 import { useState, type ComponentProps, type FormEvent } from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router";
 import { finalize } from "rxjs";
 
 import { cn } from "@/lib/utils";
@@ -17,9 +16,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Field, FieldDescription, FieldGroup } from "@/components/ui/field";
-import TextFieldComponent from "@/components/inputs/TextField.component";
-import PasswordComponent from "@/components/inputs/Password.component";
+import { Field, FieldGroup } from "@/components/ui/field";
+import PinCodeComponent from "@/components/inputs/PinCode.component";
 
 export function LoginForm({ className, ...props }: ComponentProps<"div">) {
   const { t } = useTranslation("login");
@@ -27,8 +25,7 @@ export function LoginForm({ className, ...props }: ComponentProps<"div">) {
   const [loading, setLoading] = useState(false);
 
   const { data, setData, errors, displayErrors } = useForm(LoginSchema, {
-    email: "a.fourcade65@gmail.com",
-    password: "Ae$2f3lk",
+    password: "",
   } satisfies LoginModel);
 
   const handleSubmit = (evt: FormEvent) => {
@@ -56,42 +53,17 @@ export function LoginForm({ className, ...props }: ComponentProps<"div">) {
         <CardContent>
           <form noValidate onSubmit={handleSubmit}>
             <FieldGroup>
-              <TextFieldComponent
-                required
-                id="email"
-                type="email"
-                label={t("email")}
-                value={data.email}
-                errors={errors?.email}
-                placeholder="example@mail.com"
-                handleChange={(value) =>
-                  setData((state) => ({
-                    ...state,
-                    email: value,
-                  }))
-                }
-              />
-              <PasswordComponent
-                required
-                id="password"
-                label={t("password")}
-                value={data.password}
+              <PinCodeComponent
+                id="pin-code"
+                label={t("pinCode")}
+                pinCode={data.password}
+                setPinCode={(pinCode) => setData({ password: pinCode })}
                 errors={errors?.password}
-                placeholder={t("password")}
-                handleChange={(value) =>
-                  setData((state) => ({
-                    ...state,
-                    password: value,
-                  }))
-                }
               />
               <Field>
                 <Button type="submit" disabled={loading}>
                   {t("buttons.login", { ns: "global" })}
                 </Button>
-                <FieldDescription className="text-center">
-                  {t("noAccount")} <Link to="/signup">{t("signUp.link")}</Link>
-                </FieldDescription>
               </Field>
             </FieldGroup>
           </form>

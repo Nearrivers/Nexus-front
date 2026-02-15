@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 type TextFieldComponentProps = ComponentProps<"input"> & {
   id: string;
   label: string;
-  value: string | undefined;
+  value: string | number | undefined;
   handleChange: (value: string) => void;
   errors?: string | string[];
 };

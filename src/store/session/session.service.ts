@@ -1,34 +1,22 @@
-import { from, tap } from "rxjs";
+import { catchError, from, map, tap } from "rxjs";
 import { getRegistry } from "@ngneat/elf";
 
 import { API_ROUTES } from "@/api/api.routes";
-import { BuildRequest } from "@/api/httpRequest";
+import { BuildRequest, FetchError } from "@/api/httpRequest";
 
-import {
-  sessionStore,
-  type LoginModel,
-  type SessionUser,
-  type SignUpModel,
-} from "@/store/session";
+import { sessionStore, type LoginModel } from "@/store/session";
+import type { PlayerModel } from "../players";
 
 class SessionService {
   store = sessionStore;
 
-  setUser = (user: SessionUser) => this.store.update(() => ({ user }));
-
-  register = (data: SignUpModel) => {
-    return from(API_ROUTES["POST_SIGNUP"](data));
-  };
+  setUser = (player: PlayerModel) => this.store.update(() => ({ player }));
 
   login = (data: LoginModel) => {
-    return from(API_ROUTES["POST_LOGIN"](data)).pipe(
+    return from(API_ROUTES.POST_LOGIN(data)).pipe(
       tap((response) => {
-        if (!response.ok) {
-          return;
-        }
-
         this.store.update(() => ({
-          user: response.data,
+          player: response.data,
         }));
       }),
     );
@@ -40,22 +28,23 @@ class SessionService {
   };
 
   logout = async () => {
-    const response = await API_ROUTES["POST_LOGOUT"]();
-
-    if (response.ok) {
+    try {
+      await API_ROUTES.POST_LOGOUT();
       this.store.reset();
       getRegistry().forEach((store) => store.reset());
-    }
+    } catch (error) {}
   };
 
   getMe = () => {
-    return from(API_ROUTES["GET_ME"]()).pipe(
-      tap((response) => {
-        if (!response.ok) {
-          return;
-        }
-
-        this.setUser(response.data);
+    return from(API_ROUTES.GET_ME()).pipe(
+      catchError((err: Error | FetchError) => {
+        throw err;
+      }),
+      map((response) => {
+        return response.data;
+      }),
+      tap((player) => {
+        this.setUser(player);
       }),
     );
   };

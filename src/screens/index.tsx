@@ -8,12 +8,11 @@ import AuthScreen from "@/screens/auth/Auth.screen";
 import UnauthScreens from "@/screens/unauth/UnAuth.screen";
 
 const Screens = () => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  const [user] = useObservable(sessionQuery.user$);
+  const [player] = useObservable(sessionQuery.player$);
 
   useEffect(() => {
-    setLoading(true);
     const subscription$ = sessionService
       .getMe()
       .pipe(finalize(() => setLoading(false)))
@@ -24,14 +23,17 @@ const Screens = () => {
     };
   }, []);
 
-  const isAuthenticated = !!user;
+  const isAuthenticated = !!player;
 
-  return (
-    <div className="w-full h-full">
-      {!loading && isAuthenticated && <AuthScreen />}
-      {!loading && !isAuthenticated && <UnauthScreens />}
-    </div>
-  );
+  if (isAuthenticated) {
+    return (
+      <div className="w-full h-full">
+        <AuthScreen />
+      </div>
+    );
+  }
+
+  return <div className="w-full h-full">{!loading && <UnauthScreens />}</div>;
 };
 
 export default Screens;

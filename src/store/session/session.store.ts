@@ -7,6 +7,6 @@ export const sessionStore = createStore(
     name: "session",
   },
   withProps<SessionModel>({
-    user: null,
+    player: null,
   }),
 );

@@ -5,7 +5,11 @@ import { sessionStore } from "@/store/session";
 class SessionQuery {
   store = sessionStore;
 
-  user$ = this.store.pipe(select((state) => state.user));
+  player$ = this.store.pipe(select((state) => state.player));
+
+  get player() {
+    return this.store.getValue().player;
+  }
 }
 
 export const sessionQuery = new SessionQuery();

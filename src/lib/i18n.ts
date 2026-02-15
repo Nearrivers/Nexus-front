@@ -5,7 +5,7 @@ import globalTransFR from "@/assets/locales/fr/global.translations.json";
 import loginTransFR from "@/assets/locales/fr/login.translations.json";
 import errorsTransFR from "@/assets/locales/fr/errors.translations.json";
 import homeTransFR from "@/assets/locales/fr/home.translations.json";
-import tagsTransFR from "@/assets/locales/fr/tags.translations.json";
+import playersTransFR from "@/assets/locales/fr/players.translations.json";
 
 export type LocaleEnum = "FR";
 
@@ -15,7 +15,7 @@ export const Translations = {
     login: loginTransFR,
     errors: errorsTransFR,
     home: homeTransFR,
-    tags: tagsTransFR,
+    players: playersTransFR,
   },
 } as const;
 

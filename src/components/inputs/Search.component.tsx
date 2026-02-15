@@ -15,7 +15,7 @@ const SearchComponent = (props: SearchComponentProps) => {
   const { t } = useTranslation("global");
 
   return (
-    <div className="bg-input flex rounded-md items-center p-2">
+    <div className="bg-secondary border border-border  flex rounded-md items-center p-2">
       <Search className="text-muted-foreground" />
       <Input
         className="border-none! bg-transparent! ring-transparent! text-lg! font-medium placeholder:text-lg placeholder:font-medium"

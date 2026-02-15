@@ -1,0 +1,13 @@
+{
+	"form": {
+		"title": "Créer un joueur",
+		"lead": "Ajouter un nouveau joueur pour vos campagnes",
+		"name": "Nom",
+		"className": "Classe",
+		"pinCode": "Code Pin",
+		"isAdmin": "Admin ?",
+		"totalXP": "XP"
+	},
+	"level": "Nv.{{level}}",
+	"nextLevel": "Xp nécessaire pour prochain niveau : {{xp}}"
+}
