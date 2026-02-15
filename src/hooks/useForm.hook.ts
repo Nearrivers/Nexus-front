@@ -2,7 +2,8 @@ import * as z from "zod";
 import { useCallback, useState } from "react";
 
 const useForm = <T>(schema: z.ZodTypeAny, initialState: T) => {
-  const [data, setData] = useState<Partial<T>>(initialState);
+  const [data, setData] = useState<T>(initialState);
+
   const [errors, setErrors] = useState<Record<
     keyof T,
     string | string[]

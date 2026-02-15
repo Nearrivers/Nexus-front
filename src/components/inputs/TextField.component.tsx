@@ -20,6 +20,8 @@ const TextFieldComponent = (props: TextFieldComponentProps) => {
     handleChange,
     type = "text",
     errors,
+    disabled,
+    required,
   } = props;
 
   return (
@@ -29,7 +31,8 @@ const TextFieldComponent = (props: TextFieldComponentProps) => {
         id={id}
         type={type}
         placeholder={placeholder}
-        required
+        required={required}
+        disabled={disabled}
         value={value}
         onChange={(evt) => handleChange(evt.target.value)}
       />

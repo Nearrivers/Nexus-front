@@ -8,7 +8,9 @@ const AuthPagesLayout = () => {
   return (
     <SidebarProvider>
       <AppSidebarComponent />
-      <Outlet />
+      <main className="w-full p-4">
+        <Outlet />
+      </main>
     </SidebarProvider>
   );
 };

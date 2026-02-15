@@ -16,4 +16,5 @@ export const FieldValidationType = {
       /[-#!$@£%^&*()_+|~=`{}[\]:";'<>?,./\\ ]/,
       i18n.t("fields.special", { ns: "errors" }),
     ),
+  REQUIRED_COLOR: z.string().regex(/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/),
 };

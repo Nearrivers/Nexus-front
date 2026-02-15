@@ -16,6 +16,7 @@ export const AUTH_ROUTES = {
   joker: "*",
   home: "/home",
   note: "/note",
+  tags: "/tags",
 } as const;
 
 export type UnAuthRoutes = (typeof UNAUTH_ROUTES)[keyof typeof UNAUTH_ROUTES];

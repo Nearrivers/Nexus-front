@@ -4,6 +4,8 @@ import { initReactI18next } from "react-i18next";
 import globalTransFR from "@/assets/locales/fr/global.translations.json";
 import loginTransFR from "@/assets/locales/fr/login.translations.json";
 import errorsTransFR from "@/assets/locales/fr/errors.translations.json";
+import homeTransFR from "@/assets/locales/fr/home.translations.json";
+import tagsTransFR from "@/assets/locales/fr/tags.translations.json";
 
 export type LocaleEnum = "FR";
 
@@ -12,6 +14,8 @@ export const Translations = {
     global: globalTransFR,
     login: loginTransFR,
     errors: errorsTransFR,
+    home: homeTransFR,
+    tags: tagsTransFR,
   },
 } as const;
 

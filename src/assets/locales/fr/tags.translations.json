@@ -1,0 +1,15 @@
+{
+	"title": "Vos tags",
+	"lead": "Les tags vous permettent de rechercher et faire des liens entre vos notes",
+	"addTag": "Créer un nouveau tag",
+	"dialog": {
+		"createTitle": "Créer un tag",
+		"updateTitle": "Modifier un tag",
+		"createLead": "Créez un nouveau tag. Une fois terminé, cliquez sur le bouton Enregister",
+		"updateLead": "Modifiez votre tag. Une fois terminé, cliquez sur le bouton Enregister",
+		"deleteTitle": "Supprimer un tag",
+		"deleteLead": "Attention ! Une fois un tag supprimé, il sera enlevé de toutes les notes qui l'ont. Recréer un tag avec le même nom ne fonctionnera pas.",
+		"name": "Nom",
+		"color": "Couleur"
+	}
+}

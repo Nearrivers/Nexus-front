@@ -1,12 +1,21 @@
 {
 	"buttons": {
 		"login": "Se connecter",
-		"signUp": "S'inscrire"
+		"signUp": "S'inscrire",
+		"cancel": "Annuler",
+		"save": "Enregistrer",
+		"delete": "Supprimer"
 	},
 	"modeToggle": {
 		"lead": "Modifier le thème",
 		"light": "Clair",
 		"dark": "Sombre",
 		"system": "Système"
+	},
+	"search": "Rechercher",
+	"sidebar": {
+		"trigger": "Afficher / Masquer la barre de navigation",
+		"home": "Accueil",
+		"tags": "Gérer les tags"
 	}
 }

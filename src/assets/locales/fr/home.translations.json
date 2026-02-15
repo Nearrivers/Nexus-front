@@ -1,0 +1,8 @@
+{
+	"search": {
+		"placeholder": "Recherche d'une note ou d'un tag",
+		"sort": "Trier les notes par...",
+		"all": "Tous",
+		"selectTags": "Sélectionner les tags"
+	}
+}

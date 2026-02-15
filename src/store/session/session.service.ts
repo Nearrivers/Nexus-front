@@ -1,7 +1,8 @@
-import { from, map, tap } from "rxjs";
+import { from, tap } from "rxjs";
 import { getRegistry } from "@ngneat/elf";
 
-import { BuildRequest, httpRequest } from "@/api/httpRequest";
+import { API_ROUTES } from "@/api/api.routes";
+import { BuildRequest } from "@/api/httpRequest";
 
 import {
   sessionStore,
@@ -16,11 +17,11 @@ class SessionService {
   setUser = (user: SessionUser) => this.store.update(() => ({ user }));
 
   register = (data: SignUpModel) => {
-    return from(httpRequest("POST_SIGNUP", "POST", data));
+    return from(API_ROUTES["POST_SIGNUP"](data));
   };
 
   login = (data: LoginModel) => {
-    return from(httpRequest<SessionUser>("POST_LOGIN", "POST", data)).pipe(
+    return from(API_ROUTES["POST_LOGIN"](data)).pipe(
       tap((response) => {
         if (!response.ok) {
           return;
@@ -34,12 +35,12 @@ class SessionService {
   };
 
   refreshToken = async () => {
-    const req = BuildRequest("POST_REFRESH_TOKEN", "POST");
+    const req = BuildRequest("/auth/refresh", "POST");
     return await fetch(req);
   };
 
   logout = async () => {
-    const response = await httpRequest("POST_LOGOUT", "POST");
+    const response = await API_ROUTES["POST_LOGOUT"]();
 
     if (response.ok) {
       this.store.reset();
@@ -48,7 +49,7 @@ class SessionService {
   };
 
   getMe = () => {
-    return from(httpRequest<SessionUser>("GET_ME", "GET")).pipe(
+    return from(API_ROUTES["GET_ME"]()).pipe(
       tap((response) => {
         if (!response.ok) {
           return;
