@@ -36,7 +36,6 @@ export function LoginForm({ className, ...props }: ComponentProps<"div">) {
 
     const err = displayErrors();
     if (err) {
-      console.log(err);
       return;
     }
 
@@ -44,11 +43,7 @@ export function LoginForm({ className, ...props }: ComponentProps<"div">) {
     sessionService
       .login(data as LoginModel)
       .pipe(finalize(() => setLoading(false)))
-      .subscribe({
-        next: () => {
-          console.log("ok");
-        },
-      });
+      .subscribe();
   };
 
   return (

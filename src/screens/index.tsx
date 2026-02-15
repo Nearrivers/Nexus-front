@@ -1,3 +1,4 @@
+import { finalize } from "rxjs";
 import { useEffect, useState } from "react";
 import { useObservable } from "@ngneat/react-rxjs";
 
@@ -5,7 +6,6 @@ import { sessionQuery, sessionService } from "@/store/session";
 
 import AuthScreen from "@/screens/auth/Auth.screen";
 import UnauthScreens from "@/screens/unauth/UnAuth.screen";
-import { finalize } from "rxjs";
 
 const Screens = () => {
   const [loading, setLoading] = useState(false);

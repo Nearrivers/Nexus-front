@@ -1,7 +1,7 @@
 import { from, map, tap } from "rxjs";
 import { getRegistry } from "@ngneat/elf";
 
-import { httpRequest } from "@/api/httpRequest";
+import { BuildRequest, httpRequest } from "@/api/httpRequest";
 
 import {
   sessionStore,
@@ -12,6 +12,8 @@ import {
 
 class SessionService {
   store = sessionStore;
+
+  setUser = (user: SessionUser) => this.store.update(() => ({ user }));
 
   register = (data: SignUpModel) => {
     return from(httpRequest("POST_SIGNUP", "POST", data));
@@ -32,7 +34,8 @@ class SessionService {
   };
 
   refreshToken = async () => {
-    return await httpRequest("POST_REFRESH_TOKEN", "POST");
+    const req = BuildRequest("POST_REFRESH_TOKEN", "POST");
+    return await fetch(req);
   };
 
   logout = async () => {
@@ -45,13 +48,13 @@ class SessionService {
   };
 
   getMe = () => {
-    return from(httpRequest("GET_ME", "GET")).pipe(
-      map((response) => {
+    return from(httpRequest<SessionUser>("GET_ME", "GET")).pipe(
+      tap((response) => {
         if (!response.ok) {
           return;
         }
 
-        return response.data;
+        this.setUser(response.data);
       }),
     );
   };

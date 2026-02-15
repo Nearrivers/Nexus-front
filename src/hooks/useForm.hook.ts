@@ -20,7 +20,6 @@ const useForm = <T>(schema: z.ZodTypeAny, initialState: T) => {
       (prev, curr) => {
         let err = prev[curr.path[0] as keyof T];
 
-        console.log(err);
         if (err && Array.isArray(err)) {
           err.push(curr.message);
         } else if (err && typeof err === "string") {

@@ -43,7 +43,6 @@ export function SignUpForm({ className, ...props }: ComponentProps<"div">) {
 
     const err = displayErrors();
     if (err) {
-      console.log(err);
       return;
     }
 

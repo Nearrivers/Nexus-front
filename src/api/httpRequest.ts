@@ -18,22 +18,26 @@ export type FetchResult<T> =
       response?: Response;
     };
 
-export async function httpRequest<T>(
-  url: ApiRoutes,
-  method: HttpMethod,
-  body?: any,
-): Promise<FetchResult<T>> {
+export function BuildRequest(url: ApiRoutes, method: HttpMethod, body?: any) {
   const headers = new Headers();
   headers.set("Content-Type", "application/json");
 
-  const req = new Request(import.meta.env.VITE_API_HOST + API_ROUTES[url], {
+  return new Request(import.meta.env.VITE_API_HOST + API_ROUTES[url], {
     method,
     ...(!!body && {
       body: JSON.stringify(body),
     }),
     headers,
+    credentials: "include",
   });
+}
 
+export async function httpRequest<T>(
+  url: ApiRoutes,
+  method: HttpMethod,
+  body?: any,
+): Promise<FetchResult<T>> {
+  const req = BuildRequest(url, method, body);
   const response = await fetch(req);
 
   if (response.ok) {
