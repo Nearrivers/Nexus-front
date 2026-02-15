@@ -6,6 +6,7 @@
 		"type": "Type",
 		"description": "Description",
 		"imageUrl": "Image",
+		"uploadImage": "Uploader une image",
 		"isConsumable": "Consommable ?",
 		"isEquipable": "Équipable ?",
 		"rarity": "Rareté",

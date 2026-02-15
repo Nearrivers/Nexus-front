@@ -1,7 +1,9 @@
-import { type CSSProperties } from "react";
+import { Fragment, type CSSProperties } from "react";
 import { useTranslation } from "react-i18next";
+import { ImageOff, Sparkles } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { getUploadedImageURL } from "@/lib/uploadImage";
 
 import {
   RarityColors,
@@ -23,8 +25,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { ImageOff, Sparkles } from "lucide-react";
-import RichTextComponent from "../RichText.component";
+import RichTextComponent from "@/components/RichText.component";
 
 type ItemCardComponentProps = {
   item: ItemModel | ItemFormModel;
@@ -170,7 +171,11 @@ const ItemCardComponent = ({
               </CardDescription>
             </div>
             {item.imageUrl?.length ? (
-              <img className="w-24" alt="preview" src={item.imageUrl} />
+              <img
+                className="w-24"
+                alt="preview"
+                src={getUploadedImageURL(item.imageUrl)}
+              />
             ) : (
               <ImageOff color="#fff" className="w-6" />
             )}
@@ -179,8 +184,8 @@ const ItemCardComponent = ({
             {item.abilities && (
               <section className="flex flex-col gap-4">
                 {item.abilities?.map((ability, index) => (
-                  <>
-                    <article key={index} className="whitespace-pre-line">
+                  <Fragment key={index}>
+                    <article className="whitespace-pre-line">
                       <span className="text-[#e2e4ba]">{ability.name}:</span>{" "}
                       <RichTextComponent
                         patternName="damage"
@@ -189,7 +194,7 @@ const ItemCardComponent = ({
                       />
                     </article>
                     <hr />
-                  </>
+                  </Fragment>
                 ))}
               </section>
             )}

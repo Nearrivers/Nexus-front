@@ -11,7 +11,7 @@ class ImagesService {
     return from(API_ROUTES.POST_UPLOAD_IMAGE(formData)).pipe(
       map((response) => {
         return {
-          url: import.meta.env.VITE_API_HOST + response.data.url,
+          url: response.data.url,
         };
       }),
     );
