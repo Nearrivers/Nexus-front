@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 
 type H1TypoProps = {
   children: ReactNode;
-  className: string;
+  className?: string;
 };
 
 const H1Typo = (props: H1TypoProps) => {

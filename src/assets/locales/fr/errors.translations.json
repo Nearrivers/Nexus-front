@@ -1,0 +1,18 @@
+{
+	"fields": {
+		"email": "L'email n'est pas au bon format",
+		"required": "Champ obligatoire",
+		"length": "8 caractères minimum",
+		"min": "Pas assez de caractères",
+		"max": "Trop de caractères",
+		"uppercase": "Il faut une majuscule",
+		"lowercase": "Il faut une minuscule",
+		"special": "Il faut un caractère spécial",
+		"number": "Il faut au moins un chiffre",
+		"passwordMatch": "Les deux mots de passe ne sont pas identiques",
+		"helper": {
+			"title": "Caractères spéciaux :",
+			"description": "- # ! $ @ £ % ^ & * ( ) _ + | ~ = ` { } [ ] : \" ; ' < > ? , . / \\ & espace"
+		}
+	}
+}

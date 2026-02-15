@@ -1,0 +1,23 @@
+{
+	"title": "Connectez-vous à votre compte",
+	"lead": "Veuillez renseigner votre adresse mail afin de vous connecter",
+	"email": "Mail",
+	"username": "Nom d'utilisateur",
+	"password": "Mot de passe",
+	"confirm": "Confirmation du mot de passe",
+	"noAccount": "Vous n'avez pas de compte ? ",
+	"signUp": {
+		"link": "Inscrivez-vous",
+		"title": "Inscription",
+		"lead": "Création de votre compte",
+		"backToLogin": "Retour à la page de connexion",
+		"confirmPassword": "Confirmez votre nouveau mot de passe",
+		"forgotPassword": "Mot de passe oublié ?",
+		"hidePassword": "Masquer le mot de passe",
+		"showPassword": "Afficher le mot de passe",
+		"specialHelper": {
+      "title": "Caractères spéciaux :",
+      "description": "- # ! $ @ £ % ^ & * ( ) _ + | ~ = ` { } [ ] : \" ; ' < > ? , . / \\ & espace"
+		}
+	}
+}

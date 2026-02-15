@@ -1,10 +1,18 @@
-import i18n, { type Resource } from "i18next";
+import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
+
+import globalTransFR from "@/assets/locales/fr/global.translations.json";
+import loginTransFR from "@/assets/locales/fr/login.translations.json";
+import errorsTransFR from "@/assets/locales/fr/errors.translations.json";
 
 export type LocaleEnum = "FR";
 
-export const Translations: Record<LocaleEnum, Resource> = {
-  ["FR"]: {},
+export const Translations = {
+  ["FR"]: {
+    global: globalTransFR,
+    login: loginTransFR,
+    errors: errorsTransFR,
+  },
 } as const;
 
 void i18n.use(initReactI18next).init(
