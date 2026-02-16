@@ -113,7 +113,6 @@ const AddItemScreen = () => {
 
     const err = displayErrors();
     if (err) {
-      console.log(err);
       return;
     }
 

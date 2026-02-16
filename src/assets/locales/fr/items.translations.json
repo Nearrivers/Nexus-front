@@ -67,5 +67,13 @@
 		"intelligence": "Intelligence",
 		"wisdom": "Sagesse",
 		"charisma": "Charisme"
+	},
+	"inventory": {
+		"playerNotFound": "Joueur introuvable. Actualisez et priez",
+		"title": "Inventaire de {{name}}",
+		"equippedItems": "Objets équippés",
+		"attunedItems": "Objets harmonisés",
+		"attuned": "Harmonisé",
+		"max3": "3 objets harmonisés max."
 	}
 }

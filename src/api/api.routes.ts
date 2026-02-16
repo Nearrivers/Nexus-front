@@ -9,6 +9,8 @@ import {
   type PlayerModel,
   type PlayerFormModel,
   type PlayerXpModel,
+  type PlayerWithInventoryModel,
+  type InventoryItem,
 } from "@/store/players";
 
 import { type LoginModel } from "@/store/session";
@@ -27,7 +29,7 @@ export const API_ROUTES = {
     httpRequest<PlayerModel>("/players", "POST", data),
   GET_PLAYERS: () => httpRequest<PlayerModel[]>("/players", "GET"),
   GET_ONE_PLAYER: (id: string) =>
-    httpRequest<PlayerModel[]>(`/players/one/${id}`, "GET"),
+    httpRequest<PlayerWithInventoryModel>(`/players/one/${id}`, "GET"),
   PUT_UPDATE_PLAYERS_XP: (data: Partial<PlayerXpModel>) =>
     httpRequest("/players/xp", "PUT", data),
   /* ------------- */
@@ -39,6 +41,28 @@ export const API_ROUTES = {
   GET_ONE_ITEM: (id: string) => httpRequest<ItemModel>(`/items/${id}`, "GET"),
   POST_ADD_ITEM_TO_INVENTORIES: (data: { owners: ItemOwner[] }) =>
     httpRequest<ItemModel>("/inventories", "POST", data),
+  PUT_UPDATE_INVENTORY_ITEM: (
+    playerId: string,
+    itemId: string,
+    data: Partial<
+      Pick<InventoryItem, "is_attuned" | "is_equipped" | "quantity">
+    >,
+  ) =>
+    httpRequest<InventoryItem>(
+      `/inventories/${playerId}/${itemId}`,
+      "PUT",
+      data,
+    ),
+  PUT_UPDATE_ITEM_ATTUNE_STATE: (
+    playerId: string,
+    itemId: string,
+    data: { isAttuned: boolean },
+  ) =>
+    httpRequest<InventoryItem>(
+      `/inventories/${playerId}/${itemId}/attuned`,
+      "PUT",
+      data,
+    ),
   DELETE_ITEM: (id: string) => httpRequest(`/items/${id}`, "DELETE"),
   /* ---------- */
 

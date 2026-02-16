@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { getUploadedImageURL } from "@/lib/uploadImage";
 
 import { RarityColors, type ItemModel } from "@/store/items/items.model";
+import type { InventoryItem } from "@/store/players";
 
 import {
   HoverCard,
@@ -15,7 +16,7 @@ import { Item, ItemContent } from "@/components/ui/item";
 import ItemCardComponent from "@/components/items/ItemCard.component";
 
 type ItemBoxComponentProps = {
-  item: ItemModel;
+  item: ItemModel | InventoryItem;
   className?: string;
   onClick?: () => void;
 };

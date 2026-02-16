@@ -2,6 +2,8 @@ import * as z from "zod";
 
 import { FieldValidationType } from "@/lib/zod.config";
 
+import type { ItemAbility, ItemDamage, Rarity } from "@/store/items";
+
 export type PlayerModel = {
   id: string;
   name: string;
@@ -9,6 +11,34 @@ export type PlayerModel = {
   is_admin: boolean;
   created_at: Date;
   updated_at: Date;
+};
+
+export type InventoryItem = {
+  id: string;
+  name: string;
+  type: string;
+  imageUrl: string;
+  rarity: Rarity;
+  description: string;
+  weight: number;
+  is_equipped: boolean;
+  is_consumable: boolean;
+  is_attuned: boolean;
+  quantity: number;
+  requires_attunement: boolean;
+  damages?: ItemDamage[];
+  abilities?: ItemAbility[];
+};
+
+export type UpdateInventoryItem = Partial<
+  Pick<InventoryItem, "is_attuned" | "is_equipped" | "quantity">
+>;
+
+export type PlayerWithInventoryModel = {
+  id: string;
+  name: string;
+  total_experience: number;
+  items?: InventoryItem[];
 };
 
 export const PlayerSchema = z.object({

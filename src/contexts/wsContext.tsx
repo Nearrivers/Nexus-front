@@ -1,4 +1,6 @@
-import { createContext, useEffect, useRef, useState } from "react";
+import { createContext } from "react";
+
+import type { WebSocketMessage } from "@/contexts/wsProvider";
 
 type WebSocketContextType = {
   isConnected: boolean;

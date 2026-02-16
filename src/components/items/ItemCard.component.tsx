@@ -26,9 +26,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import RichTextComponent from "@/components/RichText.component";
+import type { InventoryItem } from "@/store/players";
 
 type ItemCardComponentProps = {
-  item: ItemModel | ItemFormModel;
+  item: ItemModel | ItemFormModel | InventoryItem;
   className?: string;
   onClick?: () => void;
 };
@@ -203,11 +204,20 @@ const ItemCardComponent = ({
               text={item.description ?? ""}
               patternName="damage"
             />
-            {item.requires_attunement && (
+            {(item.requires_attunement ||
+              ("is_attuned" in item && !item.is_attuned)) && (
               <div className="opacity-60 items-center flex gap-2">
                 <Sparkles className="w-4" />
                 <p className="italic whitespace-pre-line">
                   {t("form.attunement")}
+                </p>
+              </div>
+            )}
+            {"is_attuned" in item && item.is_attuned && (
+              <div className="opacity-60 items-center flex gap-2">
+                <Sparkles className="w-4" />
+                <p className="italic whitespace-pre-line">
+                  {t("inventory.attuned")}
                 </p>
               </div>
             )}

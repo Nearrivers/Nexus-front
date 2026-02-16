@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 
 import { WebSocketContext } from "@/contexts/wsContext";
 
-type WebSocketMessage = {
+export type WebSocketMessage = {
   event: string;
   data: object;
   player_id?: string;

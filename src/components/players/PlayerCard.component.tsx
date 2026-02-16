@@ -2,7 +2,9 @@ import { useTranslation } from "react-i18next";
 
 import { getLevel, getNextLevelNeededXp } from "@/lib/level";
 
-import type { PlayerModel } from "@/store/players";
+import useTypedNavigate from "@/hooks/useTypedNavigate.hook";
+
+import type { PlayerWithInventoryModel } from "@/store/players";
 
 import {
   Item,
@@ -10,16 +12,22 @@ import {
   ItemDescription,
   ItemTitle,
 } from "@/components/ui/item";
+import { AUTH_ROUTES } from "@/@types/route-path";
 
 type PlayerCardComponentProps = {
-  player: PlayerModel;
+  player: PlayerWithInventoryModel;
 };
 
 const PlayerCardComponent = ({ player }: PlayerCardComponentProps) => {
   const { t } = useTranslation("players");
+  const navigate = useTypedNavigate();
 
   return (
-    <Item variant="outline" className="bg-secondary cursor-pointer">
+    <Item
+      variant="outline"
+      className="bg-secondary cursor-pointer"
+      onClick={() => navigate(AUTH_ROUTES.onePlayer, { id: player.id })}
+    >
       <ItemContent>
         <ItemTitle className="text-lg">{player.name}</ItemTitle>
         <ItemDescription>
