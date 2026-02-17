@@ -61,3 +61,10 @@ export type PlayerXpModel = {
   xp: number;
   ids: string[];
 };
+
+export type UpdatePlayerInventoryModel = {
+  item_id: string;
+  is_attuned: boolean;
+  is_equipped: boolean;
+  quantity: number;
+};

@@ -13,12 +13,34 @@ import {
   type PlayerFormModel,
   type UpdateInventoryItem,
 } from "@/store/players";
+import type { WebSocketMessage } from "@/contexts/wsProvider";
 
 class PlayerService {
   store = playerStore;
 
   setActivePlayer = (playerId: string) =>
     this.store.update(setActiveId(playerId));
+
+  updatePlayerInventory = ({
+    player_id,
+    data,
+  }: WebSocketMessage<"inventory:update">) => {
+    return this.store.update(
+      updateEntities(player_id ?? "", (entity) => ({
+        ...entity,
+        items: entity.items?.map((i) =>
+          i.id === data.item_id
+            ? {
+                ...i,
+                is_equipped: data.is_equipped ?? false,
+                is_attuned: data.is_attuned ?? false,
+                quantity: data.quantity ?? 0,
+              }
+            : i,
+        ),
+      })),
+    );
+  };
 
   createPlayer = (data: Partial<PlayerFormModel>) => {
     return from(API_ROUTES.POST_CREATE_PLAYER(data)).pipe(
@@ -43,7 +65,6 @@ class PlayerService {
         return response.data;
       }),
       tap((player) => {
-        console.log(player);
         this.store.update(upsertEntities(player), setActiveId(player.id));
       }),
     );
@@ -58,30 +79,7 @@ class PlayerService {
     itemId: string,
     data: UpdateInventoryItem,
   ) => {
-    return from(
-      API_ROUTES.PUT_UPDATE_INVENTORY_ITEM(playerId, itemId, data),
-    ).pipe(
-      map((response) => {
-        return response.data;
-      }),
-      tap((item: UpdateInventoryItem) =>
-        this.store.update(
-          updateEntities(playerId, (entity) => ({
-            ...entity,
-            items: entity.items?.map((i) =>
-              i.id === itemId
-                ? {
-                    ...i,
-                    is_equipped: item.is_equipped ?? false,
-                    is_attuned: item.is_attuned ?? false,
-                    quantity: item.quantity ?? 0,
-                  }
-                : i,
-            ),
-          })),
-        ),
-      ),
-    );
+    return from(API_ROUTES.PUT_UPDATE_INVENTORY_ITEM(playerId, itemId, data));
   };
 }
 
