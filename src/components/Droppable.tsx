@@ -3,13 +3,20 @@ import { useDroppable } from "@dnd-kit/react";
 
 type DroppableComponentProps = {
   id: string;
+  disabled?: boolean;
   className?: string;
   children: ReactNode;
 };
 
-const Droppable = ({ id, className, children }: DroppableComponentProps) => {
+const Droppable = ({
+  id,
+  disabled,
+  className,
+  children,
+}: DroppableComponentProps) => {
   const { ref } = useDroppable({
     id,
+    disabled,
   });
 
   return (

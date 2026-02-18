@@ -42,12 +42,17 @@ const ItemBoxComponent = ({
                 "--gradient-color": backgroundColor.bgColor,
               } as CSSProperties
             }
-            className="font-serif flex justify-center items-center w-24 h-24 bg-[linear-gradient(to_bottom,var(--gradient-color),#1B1A1999,#1B1A1999,#40295199)] border border-[#78500066]"
+            className="font-serif flex justify-center relative items-center w-24 h-24 bg-[linear-gradient(to_bottom,var(--gradient-color),#1B1A1999,#1B1A1999,#40295199)] border border-[#78500066]"
           >
             {item.imageUrl ? (
               <img alt="preview" src={getUploadedImageURL(item.imageUrl)} />
             ) : (
               <ImageOff color="#fff" />
+            )}
+            {"quantity" in item && item.quantity > 1 && (
+              <p className="absolute bottom-0.5 right-1.5 text-shadow-black text-shadow-md text-muted-foreground text-xl">
+                {item.quantity}
+              </p>
             )}
           </ItemContent>
         </Item>

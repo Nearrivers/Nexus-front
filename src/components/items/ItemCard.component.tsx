@@ -14,7 +14,7 @@ import {
   type DiceSize,
   hashDiceDamageKey,
   AttributeImages,
-  attributeColorVariant,
+  elementsColorVariant,
 } from "@/store/items/items.model";
 
 import {
@@ -128,7 +128,7 @@ const ItemCardComponent = ({
                           <p
                             key={i}
                             className={
-                              attributeColorVariant[d.damage_type ?? "slashing"]
+                              elementsColorVariant[d.damage_type ?? "slashing"]
                             }
                           >
                             {i > 0 && <span>+</span>}
@@ -202,7 +202,7 @@ const ItemCardComponent = ({
             <RichTextComponent
               className="opacity-60 italic whitespace-pre-line"
               text={item.description ?? ""}
-              patternName="damage"
+              patternName="armorClass"
             />
             {(item.requires_attunement ||
               ("is_attuned" in item && !item.is_attuned)) && (

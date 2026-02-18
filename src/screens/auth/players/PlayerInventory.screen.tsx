@@ -129,6 +129,7 @@ const PlayerInventoryScreen = () => {
           <H2Typo>{t("inventory.attunedItems")}</H2Typo>
           <Droppable
             id={ATTUNED_ITEMS_DROP_ZONE_ID}
+            disabled={attunedItems.length === 3}
             className="flex flex-wrap gap-2 pt-2"
           >
             {attunedItems.map((i) => (

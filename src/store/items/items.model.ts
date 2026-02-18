@@ -75,6 +75,17 @@ export const ZodAttributeType = z.enum([
 
 export type AttributeType = z.infer<typeof ZodAttributeType>;
 
+export const attributesType = {
+  strength: "",
+  dexterity: "",
+  constitution: "",
+  intelligence: "",
+  wisdom: "",
+  charisma: "",
+} satisfies {
+  [K in AttributeType]: string;
+};
+
 export const ZodDiceSize = z.union([
   z.literal(4),
   z.literal(6),
@@ -196,7 +207,7 @@ export function hashDiceDamageKey(
   return JSON.stringify([diceSize, damageType]);
 }
 
-export const attributeColorVariant = {
+export const elementsColorVariant = {
   acid: "text-[#80b000]",
   slashing: "text-[#8c8c8c]",
   bludgeoning: "text-[#8c8c8c]",

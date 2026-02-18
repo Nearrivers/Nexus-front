@@ -74,6 +74,7 @@
 		"equippedItems": "Objets équippés",
 		"attunedItems": "Objets harmonisés",
 		"attuned": "Harmonisé",
-		"max3": "3 objets harmonisés max."
+		"max3": "3 objets harmonisés max.",
+		"armourClass": "Classe d'armure"
 	}
 }
