@@ -9,6 +9,7 @@ import {
   type DamageType,
   attributesType,
   type AttributeType,
+  armourClassIconLink,
 } from "@/store/items";
 
 type FormattedMatch = JSX.Element;
@@ -46,13 +47,13 @@ export const PATTERNS_CONFIG: TextEditorPatternConfigModel[] = [
         <img
           alt="damage-type"
           className="w-6"
-          src={AttributeImages.get(damageType as DamageType)}
+          src={AttributeImages.get(damageType as DamageType) ?? ""}
         />
       </span>
     ),
   },
   {
-    // Pattern pour détecter les dés de dégâts (ex: "2d6")
+    // Pattern pour détecter les classes d'armures (ex: "ac:12")
     regex: () => {
       const types = Object.keys(attributesType).join("|");
       return new RegExp(`\\[ac:(\\d+)(?:\\+)?(${types})?\\]`, "gmi");
@@ -64,9 +65,9 @@ export const PATTERNS_CONFIG: TextEditorPatternConfigModel[] = [
             {armorClass}
           </span>
           <img
-            alt="attribute-type"
             className="w-10"
-            src="https://bg3.wiki/w/images/thumb/8/87/Armour_class_icon_frame.png/40px-Armour_class_icon_frame.png.webp"
+            alt="armour-class-icon"
+            src={armourClassIconLink}
           />
         </span>
         {i18n.t("inventory.armourClass", { ns: "items" })}{" "}

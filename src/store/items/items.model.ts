@@ -581,3 +581,6 @@ export const AttributeImages = new Map<DamageType, string>([
     "https://bg3.wiki/w/images/archive/8/87/20230129181200%21Thunder_Damage_Icon.png",
   ],
 ]);
+
+export const armourClassIconLink =
+  "https://bg3.wiki/w/images/thumb/8/87/Armour_class_icon_frame.png/40px-Armour_class_icon_frame.png.webp";

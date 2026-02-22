@@ -100,7 +100,11 @@ const RichTextComponent = ({ text, ...props }: RichTextComponentProps) => {
   //   return parts.length > 0 ? parts : text;
   // };
 
-  return <p {...props}>{parseText()}</p>;
+  return (
+    <p role="textbox" {...props}>
+      {parseText()}
+    </p>
+  );
 };
 
 export default RichTextComponent;
