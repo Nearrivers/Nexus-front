@@ -7,6 +7,7 @@ import { sessionQuery } from "@/store/session";
 const RoleRedirect = () => {
   const player = sessionQuery.player;
 
+  console.log(player, player?.is_admin);
   if (!player) {
     return <></>;
   }

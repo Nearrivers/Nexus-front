@@ -117,6 +117,8 @@ export type ItemOwner = {
   item_id: string;
   player_id: string;
   player_name: string;
+  is_equipped: boolean;
+  is_attuned: boolean;
   quantity: number;
 };
 

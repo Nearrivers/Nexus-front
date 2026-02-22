@@ -21,6 +21,28 @@ class PlayerService {
   setActivePlayer = (playerId: string) =>
     this.store.update(setActiveId(playerId));
 
+  addItemToPlayersInventories = ({
+    data,
+  }: WebSocketMessage<"inventory:add">) => {
+    data.item.owners?.forEach((o) => {
+      this.store.update(
+        updateEntities(o.player_id ?? "", (entity) => ({
+          ...entity,
+          items: entity.items?.map((i) =>
+            i.id === data.item.id
+              ? {
+                  ...i,
+                  is_equipped: o.is_equipped ?? false,
+                  is_attuned: o.is_attuned ?? false,
+                  quantity: o.quantity ?? 0,
+                }
+              : i,
+          ),
+        })),
+      );
+    });
+  };
+
   updatePlayerInventory = ({
     player_id,
     data,

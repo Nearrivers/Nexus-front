@@ -4,6 +4,7 @@ import { WebSocketContext } from "@/contexts/wsContext";
 
 import {
   playerService,
+  type AddItemToInventoriesModel,
   type UpdatePlayerInventoryModel,
 } from "@/store/players";
 
@@ -13,7 +14,7 @@ type WebSocketMessageEvent =
   | "inventory:remove";
 
 type WebSocketDataModel = {
-  "inventory:add": object;
+  "inventory:add": AddItemToInventoriesModel;
   "inventory:update": UpdatePlayerInventoryModel;
   "inventory:remove": object;
 };
@@ -54,6 +55,7 @@ const WebSocketProvider = ({ children, playerId }: WebSocketProviderProps) => {
       const message = JSON.parse(event.data);
       switch (message.event as WebSocketMessageEvent) {
         case "inventory:add":
+          playerService.addItemToPlayersInventories(message);
           break;
         case "inventory:update":
           playerService.updatePlayerInventory(message);

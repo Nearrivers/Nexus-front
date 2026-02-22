@@ -2,7 +2,7 @@ import * as z from "zod";
 
 import { FieldValidationType } from "@/lib/zod.config";
 
-import type { ItemAbility, ItemDamage, Rarity } from "@/store/items";
+import type { ItemAbility, ItemDamage, ItemModel, Rarity } from "@/store/items";
 
 export type PlayerModel = {
   id: string;
@@ -60,6 +60,10 @@ export type PlayerFormModel = z.infer<typeof PlayerSchema>;
 export type PlayerXpModel = {
   xp: number;
   ids: string[];
+};
+
+export type AddItemToInventoriesModel = {
+  item: ItemModel;
 };
 
 export type UpdatePlayerInventoryModel = {

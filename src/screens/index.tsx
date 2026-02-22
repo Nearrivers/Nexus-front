@@ -26,17 +26,20 @@ const Screens = () => {
 
   const isAuthenticated = !!player;
 
-  if (isAuthenticated) {
-    return (
-      <div className="w-full h-full">
+  if (loading) {
+    return <></>;
+  }
+
+  return (
+    <div className="w-full h-full">
+      {!loading && isAuthenticated && (
         <WebSocketProvider playerId={player.id}>
           <AuthScreen />
         </WebSocketProvider>
-      </div>
-    );
-  }
-
-  return <div className="w-full h-full">{!loading && <UnauthScreens />}</div>;
+      )}
+      {!loading && !isAuthenticated && <UnauthScreens />}
+    </div>
+  );
 };
 
 export default Screens;

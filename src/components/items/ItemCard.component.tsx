@@ -189,7 +189,6 @@ const ItemCardComponent = ({
                     <article className="whitespace-pre-line">
                       <span className="text-[#e2e4ba]">{ability.name}:</span>{" "}
                       <RichTextComponent
-                        patternName="damage"
                         text={ability.description ?? ""}
                         className="inline text-muted-foreground opacity-90"
                       />
@@ -202,7 +201,6 @@ const ItemCardComponent = ({
             <RichTextComponent
               className="opacity-60 italic whitespace-pre-line"
               text={item.description ?? ""}
-              patternName="armorClass"
             />
             {(item.requires_attunement ||
               ("is_attuned" in item && !item.is_attuned)) && (
