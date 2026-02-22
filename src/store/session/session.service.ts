@@ -1,12 +1,14 @@
+import { toast } from "sonner";
 import { catchError, from, map, tap } from "rxjs";
 import { getRegistry } from "@ngneat/elf";
+
+import i18n from "@/lib/i18n";
 
 import { API_ROUTES } from "@/api/api.routes";
 import { BuildRequest, FetchError } from "@/api/httpRequest";
 
+import type { PlayerModel } from "@/store/players";
 import { sessionStore, type LoginModel } from "@/store/session";
-import type { PlayerModel } from "../players";
-import { toast } from "sonner";
 
 class SessionService {
   store = sessionStore;
@@ -32,7 +34,7 @@ class SessionService {
     await API_ROUTES.POST_LOGOUT();
     this.store.reset();
     getRegistry().forEach((store) => store.reset());
-    toast.error("Test");
+    toast.error(i18n.t("loggedOut", { ns: "login" }));
   };
 
   getMe = () => {

@@ -1,5 +1,6 @@
 {
 	"title": "Identifiez-vous",
 	"lead": "Veuillez renseigner votre code pin",
-	"pinCode": "Code Pin"
+	"pinCode": "Code Pin",
+	"loggedOut": "Votre session a expiré."
 }

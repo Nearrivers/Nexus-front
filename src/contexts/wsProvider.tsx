@@ -1,4 +1,10 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 
 import { WebSocketContext } from "@/contexts/wsContext";
 
@@ -38,51 +44,54 @@ const WebSocketProvider = ({ children, playerId }: WebSocketProviderProps) => {
   const ws = useRef<WebSocket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
 
-  const connect = () => {
-    const apiWsEndpoint = import.meta.env.VITE_API_HOST.includes("https")
-      ? import.meta.env.VITE_API_HOST.replace("https", "wss")
-      : import.meta.env.VITE_API_HOST.replace("http", "ws");
+  const connect = useCallback(
+    function startConnection() {
+      const apiWsEndpoint = import.meta.env.VITE_API_HOST.includes("https")
+        ? import.meta.env.VITE_API_HOST.replace("https", "wss")
+        : import.meta.env.VITE_API_HOST.replace("http", "ws");
 
-    // Connexion WebSocket
-    const socket = new WebSocket(`${apiWsEndpoint}/ws?player_id=${playerId}`);
+      // Connexion WebSocket
+      const socket = new WebSocket(`${apiWsEndpoint}/ws?player_id=${playerId}`);
 
-    socket.onopen = () => {
-      console.log("WebSocket connected");
-      setIsConnected(true);
-    };
+      socket.onopen = () => {
+        console.log("WebSocket connected");
+        setIsConnected(true);
+      };
 
-    socket.onmessage = (event) => {
-      const message = JSON.parse(event.data);
-      switch (message.event as WebSocketMessageEvent) {
-        case "inventory:add":
-          playerService.addItemToPlayersInventories(message);
-          break;
-        case "inventory:update":
-          playerService.updatePlayerInventory(message);
-          break;
-        case "inventory:remove":
-          break;
-      }
-      console.log("WebSocket message:", message);
-    };
+      socket.onmessage = (event) => {
+        const message = JSON.parse(event.data);
+        switch (message.event as WebSocketMessageEvent) {
+          case "inventory:add":
+            playerService.addItemToPlayersInventories(message);
+            break;
+          case "inventory:update":
+            playerService.updatePlayerInventory(message);
+            break;
+          case "inventory:remove":
+            break;
+        }
+        console.log("WebSocket message:", message);
+      };
 
-    socket.onerror = (error) => {
-      console.error("WebSocket error:", error);
-    };
+      socket.onerror = (error) => {
+        console.error("WebSocket error:", error);
+      };
 
-    socket.onclose = () => {
-      console.log("WebSocket disconnected");
-      setIsConnected(false);
+      socket.onclose = () => {
+        console.log("WebSocket disconnected");
+        setIsConnected(false);
 
-      // Reconnexion automatique après 3s
-      reconnectTimeout.current = setTimeout(() => {
-        console.log("Reconnecting...");
-        connect();
-      }, 3000);
-    };
+        // Reconnexion automatique après 3s
+        reconnectTimeout.current = setTimeout(() => {
+          console.log("Reconnecting...");
+          startConnection();
+        }, 3000);
+      };
 
-    ws.current = socket;
-  };
+      ws.current = socket;
+    },
+    [playerId],
+  );
 
   useEffect(() => {
     if (playerId) {
@@ -98,7 +107,7 @@ const WebSocketProvider = ({ children, playerId }: WebSocketProviderProps) => {
         ws.current.close();
       }
     };
-  }, [playerId]);
+  }, [playerId, connect]);
 
   const sendMessage = (message: object) => {
     if (ws.current && ws.current.readyState === WebSocket.OPEN) {

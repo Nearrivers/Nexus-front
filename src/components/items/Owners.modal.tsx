@@ -35,19 +35,31 @@ const OwnersModal = ({ itemId, open, handleClose }: OwnersModalProps) => {
   const [item] = useObservable(itemsQuery.activeItem$(itemId));
 
   const [itemsWithQuantities, setItemsWithQuantities] = useState<ItemOwner[]>(
-    players.map((p) => ({
-      item_id: itemId,
-      player_id: p.id,
-      player_name: p.name,
-      quantity: item?.owners?.find((o) => o.player_id === p.id)?.quantity ?? 0,
-    })),
+    players.map((p) => {
+      const i: ItemOwner = {
+        item_id: itemId,
+        player_id: p.id,
+        player_name: p.name,
+        quantity: 0,
+        is_attuned: false,
+        is_equipped: false,
+      };
+
+      const foundItem = item?.owners?.find((o) => o.player_id === p.id);
+
+      i.is_equipped = foundItem?.is_equipped ?? false;
+      i.quantity = foundItem?.quantity ?? 0;
+      i.is_equipped = foundItem?.is_equipped ?? false;
+
+      return i;
+    }),
   );
 
   useEffect(() => {
     if (!players.length) {
       playerService.getPlayers().subscribe();
     }
-  }, []);
+  }, [players]);
 
   const handleSubmit = (evt: FormEvent) => {
     evt.preventDefault();
