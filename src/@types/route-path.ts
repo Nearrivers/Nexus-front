@@ -14,7 +14,7 @@ export const UNAUTH_ROUTES = {
   login: "/login" as const,
 } as const;
 
-export const AUTH_ROUTES = {
+export const ADMIN_ROUTES = {
   joker: "*",
   addRoute: "add",
   updateRoute: "update/:id",
@@ -33,20 +33,20 @@ export const AUTH_ROUTES = {
 
 export type UnAuthRoutes = (typeof UNAUTH_ROUTES)[keyof typeof UNAUTH_ROUTES];
 
-export type AuthRoutes = (typeof AUTH_ROUTES)[keyof typeof AUTH_ROUTES];
+export type AdminRoutes = (typeof ADMIN_ROUTES)[keyof typeof ADMIN_ROUTES];
 
 type RoutePaths<T> = T extends string
   ? T
   : { [K in keyof T]: RoutePaths<T[K]> }[keyof T];
 
 export type AppRoute =
-  | RoutePaths<typeof AUTH_ROUTES>
+  | RoutePaths<typeof ADMIN_ROUTES>
   | RoutePaths<typeof UNAUTH_ROUTES>
   | "..";
 
 export type UnAuthRouteObject = RouteObject<UnAuthRoutes>;
 
-export type AuthRouteObject = RouteObject<AuthRoutes>;
+export type AuthRouteObject = RouteObject<AdminRoutes>;
 
 // Objectif du type :
 // à partir d'une route telle que "/users/:id/posts/:postId".

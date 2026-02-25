@@ -1,7 +1,7 @@
 import { lazy } from "react";
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, Navigate } from "react-router";
 
-import { AUTH_ROUTES, type AuthRouteObject } from "@/@types/route-path";
+import { ADMIN_ROUTES, type AuthRouteObject } from "@/@types/route-path";
 
 import RoleRedirect from "@/routers/role.redirect";
 
@@ -16,37 +16,37 @@ const PlayerInventoryScreen = lazy(
 );
 const AddItemScreen = lazy(() => import("@/screens/auth/items/AddItem.screen"));
 
-const authRouter = createBrowserRouter([
+const adminRouter = createBrowserRouter([
   {
     element: <AuthPagesLayout />,
     children: [
-      { path: AUTH_ROUTES.home, element: <HomeScreen /> },
+      { path: ADMIN_ROUTES.home, element: <HomeScreen /> },
       {
-        path: AUTH_ROUTES.players,
+        path: ADMIN_ROUTES.players,
         children: [
-          { path: AUTH_ROUTES.oneRoute, element: <PlayerInventoryScreen /> },
-          { path: AUTH_ROUTES.addRoute, element: <AddPlayerScreen /> },
-          { path: AUTH_ROUTES.updateRoute, element: <></> },
+          { path: ADMIN_ROUTES.oneRoute, element: <PlayerInventoryScreen /> },
+          { path: ADMIN_ROUTES.addRoute, element: <AddPlayerScreen /> },
+          { path: ADMIN_ROUTES.updateRoute, element: <></> },
         ],
       },
       {
-        path: AUTH_ROUTES.items,
+        path: ADMIN_ROUTES.items,
         children: [
-          { path: AUTH_ROUTES.oneRoute, element: <></> },
-          { path: AUTH_ROUTES.addRoute, element: <AddItemScreen /> },
-          { path: AUTH_ROUTES.updateRoute, element: <></> },
+          { path: ADMIN_ROUTES.oneRoute, element: <></> },
+          { path: ADMIN_ROUTES.addRoute, element: <AddItemScreen /> },
+          { path: ADMIN_ROUTES.updateRoute, element: <></> },
         ],
       },
       {
-        path: AUTH_ROUTES.demo,
+        path: ADMIN_ROUTES.demo,
         element: <DemoScreen />,
       },
       {
         path: "*",
-        Component: RoleRedirect,
+        element: <Navigate to={ADMIN_ROUTES.home} replace />,
       },
     ] satisfies AuthRouteObject[],
   },
 ]);
 
-export default authRouter;
+export default adminRouter;

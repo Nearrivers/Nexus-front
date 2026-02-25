@@ -5,7 +5,7 @@ import { LayoutList, Plus, UsersRound } from "lucide-react";
 
 import useTypedNavigate from "@/hooks/useTypedNavigate.hook";
 
-import { AUTH_ROUTES } from "@/@types/route-path";
+import { ADMIN_ROUTES } from "@/@types/route-path";
 
 import { cn } from "@/lib/utils";
 
@@ -62,7 +62,7 @@ const HomeScreen = () => {
                   <Button
                     size="icon-sm"
                     variant="outline"
-                    onClick={() => navigate(AUTH_ROUTES.addPlayer)}
+                    onClick={() => navigate(ADMIN_ROUTES.addPlayer)}
                   >
                     <Plus />
                   </Button>

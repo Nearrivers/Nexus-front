@@ -14,6 +14,9 @@ import {
   type UpdateInventoryItem,
 } from "@/store/players";
 import type { WebSocketMessage } from "@/contexts/wsProvider";
+import { sessionQuery } from "../session";
+import { toast } from "sonner";
+import i18n from "@/lib/i18n";
 
 class PlayerService {
   store = playerStore;
@@ -26,19 +29,31 @@ class PlayerService {
   }: WebSocketMessage<"inventory:add">) => {
     data.item.owners?.forEach((o) => {
       this.store.update(
-        updateEntities(o.player_id ?? "", (entity) => ({
-          ...entity,
-          items: entity.items?.map((i) =>
-            i.id === data.item.id
-              ? {
-                  ...i,
-                  is_equipped: o.is_equipped ?? false,
-                  is_attuned: o.is_attuned ?? false,
-                  quantity: o.quantity ?? 0,
-                }
-              : i,
-          ),
-        })),
+        updateEntities(o.player_id ?? "", (entity) => {
+          if (sessionQuery.player && sessionQuery?.player.id === o.player_id) {
+            toast(
+              i18n.t("toasts.addItem", {
+                ns: "items",
+                name: data.item.name,
+                count: o.quantity,
+              }),
+            );
+          }
+
+          return {
+            ...entity,
+            items: entity.items?.map((i) =>
+              i.id === data.item.id
+                ? {
+                    ...i,
+                    is_equipped: o.is_equipped ?? false,
+                    is_attuned: o.is_attuned ?? false,
+                    quantity: o.quantity ?? 0,
+                  }
+                : i,
+            ),
+          };
+        }),
       );
     });
   };

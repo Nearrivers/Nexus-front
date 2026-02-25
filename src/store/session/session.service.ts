@@ -43,6 +43,7 @@ class SessionService {
         throw err;
       }),
       map((response) => {
+        console.log(response);
         return response.data;
       }),
       tap((player) => {

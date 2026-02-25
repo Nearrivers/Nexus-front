@@ -4,20 +4,19 @@ import { useObservable } from "@ngneat/react-rxjs";
 
 import { sessionQuery, sessionService } from "@/store/session";
 
-import AuthScreen from "@/screens/auth/Auth.screen";
+import AdminScreen from "@/screens/auth/Admin.screen";
 import UnauthScreens from "@/screens/unauth/UnAuth.screen";
 import WebSocketProvider from "@/contexts/wsProvider";
 
 const Screens = () => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  const [player] = useObservable(sessionQuery.player$);
+  const [player] = useObservable(
+    sessionQuery.player$.pipe(finalize(() => setLoading(false))),
+  );
 
   useEffect(() => {
-    const subscription$ = sessionService
-      .getMe()
-      .pipe(finalize(() => setLoading(false)))
-      .subscribe();
+    const subscription$ = sessionService.getMe().subscribe();
 
     return () => {
       subscription$.unsubscribe();
@@ -32,9 +31,9 @@ const Screens = () => {
 
   return (
     <div className="w-full h-full">
-      {!loading && isAuthenticated && (
+      {!loading && isAuthenticated && player.is_admin && (
         <WebSocketProvider playerId={player.id}>
-          <AuthScreen />
+          <AdminScreen />
         </WebSocketProvider>
       )}
       {!loading && !isAuthenticated && <UnauthScreens />}

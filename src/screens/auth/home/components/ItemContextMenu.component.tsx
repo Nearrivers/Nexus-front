@@ -4,7 +4,7 @@ import { Pencil, Trash2, Users } from "lucide-react";
 
 import useTypedNavigate from "@/hooks/useTypedNavigate.hook";
 
-import { AUTH_ROUTES } from "@/@types/route-path";
+import { ADMIN_ROUTES } from "@/@types/route-path";
 
 import {
   ContextMenu,
@@ -59,7 +59,7 @@ const ItemContextMenuComponent = ({
       <ContextMenuContent>
         <ContextMenuItem
           onClick={() => {
-            navigate(AUTH_ROUTES.updateItem, { id: itemId });
+            navigate(ADMIN_ROUTES.updateItem, { id: itemId });
           }}
         >
           <Pencil />

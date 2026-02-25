@@ -5,6 +5,8 @@ import { useTranslation } from "react-i18next";
 import { DragDropProvider } from "@dnd-kit/react";
 import { useObservable } from "@ngneat/react-rxjs";
 
+import { getNextLevelNeededXp } from "@/lib/level";
+
 import {
   playerService,
   playersQuery,
@@ -17,6 +19,8 @@ import H2Typo from "@/components/ui/typographies/h2";
 import Draggable from "@/components/Draggable";
 import Droppable from "@/components/Droppable";
 import ItemBoxComponent from "@/components/items/ItemBox.component";
+import { Slider } from "@/components/ui/slider";
+import { Label } from "@/components/ui/label";
 
 const EQUIPPED_ITEMS_DROP_ZONE_ID = "equippedItems";
 const ATTUNED_ITEMS_DROP_ZONE_ID = "attunedItems";
@@ -35,6 +39,11 @@ const PlayerInventoryScreen = () => {
   const attunedItems = player?.items?.filter((i) => i.is_attuned) ?? [];
   const othersItems =
     player?.items?.filter((i) => !i.is_attuned && !i.is_equipped) ?? [];
+
+  const totalWeight =
+    player?.items?.reduce((prev, curr) => {
+      return prev + curr.weight;
+    }, 0) ?? 0;
 
   useEffect(() => {
     if (!id) {
@@ -105,6 +114,7 @@ const PlayerInventoryScreen = () => {
             {t("inventory.title", { name: player.name })}
           </H1Typo>
           <hr />
+          <p className="text-muted-foreground italic">{t("inventory.lead")}</p>
         </header>
         <section className="py-2 w-full text-muted-foreground">
           <H2Typo>{t("inventory.equippedItems")}</H2Typo>
@@ -114,7 +124,7 @@ const PlayerInventoryScreen = () => {
           >
             {equippedItems.map((i) => (
               <Draggable key={i.id} id={i.id}>
-                <ItemBoxComponent item={i} />
+                <ItemBoxComponent className="cursor-pointer" item={i} />
               </Draggable>
             ))}
             <Item
@@ -134,7 +144,7 @@ const PlayerInventoryScreen = () => {
           >
             {attunedItems.map((i) => (
               <Draggable key={i.id} id={i.id}>
-                <ItemBoxComponent key={i.id} item={i} />
+                <ItemBoxComponent className="cursor-pointer" item={i} />
               </Draggable>
             ))}
             {attunedItems.length === 3 ? (
@@ -157,7 +167,7 @@ const PlayerInventoryScreen = () => {
           >
             {othersItems.map((i) => (
               <Draggable key={i.id} id={i.id}>
-                <ItemBoxComponent item={i} />
+                <ItemBoxComponent className="cursor-pointer" item={i} />
               </Draggable>
             ))}
             <Item
@@ -169,6 +179,27 @@ const PlayerInventoryScreen = () => {
           </Droppable>
         </section>
       </main>
+      <section className="fixed bottom-0 left-0 p-2 w-full md:flex md:gap-2">
+        <article id="carrying-capacity" className="flex-1">
+          <Item variant="outline">
+            <Label htmlFor="carrying-capacity-slider">
+              {t("inventory.carryingCapacity")}
+            </Label>
+            <Slider id="carrying-capacity-slider" disabled max={100} step={1} />
+          </Item>
+        </article>
+        <article id="carrying-capacity" className="flex-1">
+          <Item variant="outline">
+            <Label htmlFor="xp-slider">
+              {t("nextLevel", {
+                xp: getNextLevelNeededXp(player?.total_experience ?? 0),
+                ns: "players",
+              })}
+            </Label>
+            <Slider id="xp-slider" disabled max={100} step={1} />
+          </Item>
+        </article>
+      </section>
     </DragDropProvider>
   );
 };

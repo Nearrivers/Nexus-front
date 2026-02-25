@@ -12,7 +12,7 @@ import {
   ItemDescription,
   ItemTitle,
 } from "@/components/ui/item";
-import { AUTH_ROUTES } from "@/@types/route-path";
+import { ADMIN_ROUTES } from "@/@types/route-path";
 
 type PlayerCardComponentProps = {
   player: PlayerWithInventoryModel;
@@ -26,7 +26,7 @@ const PlayerCardComponent = ({ player }: PlayerCardComponentProps) => {
     <Item
       variant="outline"
       className="bg-secondary cursor-pointer"
-      onClick={() => navigate(AUTH_ROUTES.onePlayer, { id: player.id })}
+      onClick={() => navigate(ADMIN_ROUTES.onePlayer, { id: player.id })}
     >
       <ItemContent>
         <ItemTitle className="text-lg">{player.name}</ItemTitle>

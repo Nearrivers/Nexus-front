@@ -6,7 +6,7 @@ import { useState, type ChangeEvent, type FormEvent } from "react";
 import useForm from "@/hooks/useForm.hook";
 import useTypedNavigate from "@/hooks/useTypedNavigate.hook";
 
-import { AUTH_ROUTES } from "@/@types/route-path";
+import { ADMIN_ROUTES } from "@/@types/route-path";
 
 import {
   ItemFormSchema,
@@ -145,7 +145,7 @@ const AddItemScreen = () => {
   const handleCloseOwnersModal = (itemOwners?: ItemOwner[]) => {
     if (!itemOwners) {
       setItemId("");
-      navigate(AUTH_ROUTES.home);
+      navigate(ADMIN_ROUTES.home);
       return;
     }
 
@@ -153,7 +153,7 @@ const AddItemScreen = () => {
       .addItemToInventories(itemOwners.filter((i) => i.quantity > 0))
       .subscribe({
         next: () => {
-          navigate(AUTH_ROUTES.home);
+          navigate(ADMIN_ROUTES.home);
           setItemId("");
         },
       });

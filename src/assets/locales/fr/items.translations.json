@@ -71,10 +71,15 @@
 	"inventory": {
 		"playerNotFound": "Joueur introuvable. Actualisez et priez",
 		"title": "Inventaire de {{name}}",
+		"lead": "Vous pouvez faire glisser les objets pour les marquer comme 'équipé' ou 'harmonisé'",
 		"equippedItems": "Objets équippés",
 		"attunedItems": "Objets harmonisés",
 		"attuned": "Harmonisé",
 		"max3": "3 objets harmonisés max.",
-		"armourClass": "Classe d'armure"
+		"armourClass": "Classe d'armure",
+		"carryingCapacity": "Capacité de l'inventaire"
+	},
+	"toasts": {
+		"addItem": "Vous avez reçu {{count}} exemplaire(s) de \"{{name}}\"."
 	}
 }

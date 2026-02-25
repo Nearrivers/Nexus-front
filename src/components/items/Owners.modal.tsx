@@ -24,10 +24,6 @@ type OwnersModalProps = {
   handleClose: (itemOwners?: ItemOwner[]) => void;
 };
 
-// TODO: Incohérence entre le modal et le fonctionnement du back. Le modal pense donner
-// le chiffre exact des quantités alors que le back incrémente. Afficher la quantité
-// possédée par chaque joueur, reset le compte à 0 quand on ouvre le modal
-// et le préciser dans le t('owners.lead')
 const OwnersModal = ({ itemId, open, handleClose }: OwnersModalProps) => {
   const { t } = useTranslation("home");
 

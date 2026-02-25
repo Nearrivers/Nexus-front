@@ -5,7 +5,7 @@ import { finalize } from "rxjs";
 import useForm from "@/hooks/useForm.hook";
 import useTypedNavigate from "@/hooks/useTypedNavigate.hook";
 
-import { AUTH_ROUTES } from "@/@types/route-path";
+import { ADMIN_ROUTES } from "@/@types/route-path";
 
 import {
   PlayerSchema,
@@ -57,7 +57,7 @@ const AddPlayerScreen = () => {
       .createPlayer(data)
       .pipe(finalize(() => setLoading(false)))
       .subscribe({
-        next: () => navigate(AUTH_ROUTES.home),
+        next: () => navigate(ADMIN_ROUTES.home),
       });
   };
 
